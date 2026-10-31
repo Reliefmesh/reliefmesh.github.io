@@ -1,0 +1,953 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ReliefMesh App Screens</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a showcase stage (screen index · live phone · notes on what the screen does). The phone shows the app; its colours are fixed, since it depicts the product. */
+:root{
+  --bg:#EEF4F0; --surface:#FFFFFF; --ink:#12261A; --muted:#4A5F52; --line:#D2E0D6; --accent:#15774A; --accent-ink:#FFFFFF; --chip:#E1F0E6;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", Roboto, system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+  /* the app's own palette (fixed, single theme) */
+  --a-bg:#FFFFFF; --a-soft:#F2F8F4; --a-mint:#DCF1E3; --a-line:#DCE7E0; --a-ink:#11281B; --a-sub:#4B6154;
+  --a-g:#17804D; --a-gd:#0E5A35; --a-red:#C62F1E; --a-redsoft:#FCEAE7; --a-amb:#F2B300; --a-ambsoft:#FFF4D2; --a-ambink:#6E4E00;
+  --a-done:#1E8A55; --a-map:#E8F0EA; --a-block:#DAE6DD; --a-water:#B7D8EE; --a-bezel:#121714;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0D1611; --surface:#14211A; --ink:#E4EFE8; --muted:#9DB4A6; --line:#26392E; --accent:#4CC48A; --accent-ink:#06210F; --chip:#1C3326; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#0D1611; --surface:#14211A; --ink:#E4EFE8; --muted:#9DB4A6; --line:#26392E; --accent:#4CC48A; --accent-ink:#06210F; --chip:#1C3326; color-scheme:dark }
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--body);font-size:15px;line-height:1.5;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:24px 48px}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* ---------- showcase ---------- */
+.top{max-width:1320px;margin:0 auto 20px;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.brand-mark svg{width:26px;height:26px}
+.brand h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1;margin:0;letter-spacing:-.02em}
+.brand p{margin:4px 0 0;color:var(--muted)}
+.rolebox{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rolebox span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.stage{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:230px 404px minmax(0,1fr);gap:28px;align-items:start}
+.index{position:sticky;top:16px;display:flex;flex-direction:column;gap:2px}
+.index h2,.notes h2{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 8px;font-weight:700}
+.index button{display:flex;gap:10px;align-items:center;text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:10px;cursor:pointer;color:var(--ink)}
+.index button:hover{background:var(--chip)}
+.index button[aria-current="true"]{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);font-weight:700}
+.index .n{font-family:var(--mono);font-size:11px;color:var(--muted);width:20px}
+.phone-wrap{position:relative}
+.notes{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px;min-width:0}
+.notes h3{font-family:var(--display);font-weight:800;font-size:28px;margin:0 0 6px;line-height:1.1;text-wrap:balance}
+.notes .lead{color:var(--ink);margin:0 0 16px;max-width:62ch}
+.notes h4{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:18px 0 6px}
+.notes p{margin:0;max-width:62ch}
+.ctl{display:grid;grid-template-columns:minmax(110px,170px) minmax(0,1fr);gap:8px 14px;margin:0}
+.ctl dt{font-weight:700}
+.ctl dd{margin:0;color:var(--muted)}
+.try{margin-top:18px;background:var(--chip);border-radius:12px;padding:12px 14px}
+.try b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:2px}
+.sample{margin-top:14px;font-size:13px;color:var(--muted)}
+@media (max-width:1180px){
+  .stage{grid-template-columns:404px minmax(0,1fr)}
+  .index{position:static;grid-column:1/-1;flex-direction:row;overflow-x:auto;padding-bottom:6px}
+  .index h2{display:none}
+  .index button{white-space:nowrap;flex:none;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+  .index button[aria-current="true"]{background:var(--accent);color:var(--accent-ink)}
+  .index button[aria-current="true"] .n{color:inherit}
+}
+@media (max-width:800px){ .stage{grid-template-columns:minmax(0,1fr)} .phone-wrap{margin:0 auto} .ctl{grid-template-columns:minmax(0,1fr)} .ctl dd{margin-bottom:6px} }
+
+/* shot mode (PNG export) */
+html.shot,html.shot body{background:transparent}
+html.shot body{padding:0}
+html.shot .top,html.shot .index,html.shot .notes{display:none}
+html.shot .stage{display:block}
+
+/* ---------- phone ---------- */
+.phone{width:404px;height:844px;border:12px solid var(--a-bezel);border-radius:52px;background:var(--a-bezel);position:relative;transform-origin:top left;box-shadow:0 30px 60px -30px rgba(10,40,25,.45)}
+.phone.bare{width:380px;height:820px;border-width:0;border-radius:28px;box-shadow:0 10px 30px -12px rgba(10,40,25,.4)}
+.phone.bare .screen{border-radius:28px}
+.screen{position:absolute;inset:0;border-radius:40px;overflow:hidden;background:var(--a-bg);color:var(--a-ink);font-family:var(--body);font-size:15px;line-height:1.4;display:flex;flex-direction:column}
+.screen .ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sb{height:30px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 26px;font-size:13px;font-weight:700;position:relative;background:var(--a-bg)}
+.sb .cam{position:absolute;left:50%;top:8px;width:13px;height:13px;margin-left:-6px;border-radius:50%;background:#0B0F0C}
+.sb .r{display:flex;gap:6px;align-items:center}
+.sb .ic{width:15px;height:15px}
+.sb-sos{background:var(--a-red);color:#fff}
+.ab{height:56px;flex:none;display:flex;align-items:center;gap:6px;padding:0 10px 0 6px;background:var(--a-bg)}
+.ab h2{font-size:20px;font-weight:700;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--a-ink)}
+.ibtn{width:44px;height:44px;border:0;background:transparent;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--a-ink)}
+.ibtn:hover{background:var(--a-soft)}
+.mesh-chip{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;background:var(--a-mint);color:var(--a-gd);padding:5px 9px;border-radius:999px}
+.mesh-chip .ic{width:15px;height:15px}
+.sos-btn{border:0;background:var(--a-red);color:#fff;font-weight:700;font-size:14px;letter-spacing:.06em;height:36px;padding:0 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:6px;min-width:44px}
+.sos-btn .ic{width:16px;height:16px}
+.content{flex:1;min-height:0;position:relative;background:var(--a-bg)}
+.scroll{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.nav{height:68px;flex:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--a-line);background:var(--a-bg)}
+.nav button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:700;color:var(--a-sub);cursor:pointer;position:relative}
+.nav .pillw{width:56px;height:30px;border-radius:999px;display:grid;place-items:center}
+.nav button[aria-current="page"]{color:var(--a-gd)}
+.nav button[aria-current="page"] .pillw{background:var(--a-mint)}
+.nav .badge{position:absolute;top:6px;left:calc(50% + 6px);background:var(--a-red);color:#fff;font-size:10px;min-width:17px;height:17px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.gest{height:16px;flex:none;display:grid;place-items:center;background:var(--a-bg)}
+.gest i{width:110px;height:4px;border-radius:2px;background:#1B2A20;display:block}
+
+/* shared app pieces */
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--a-line);background:var(--a-bg);color:var(--a-ink);border-radius:10px;height:36px;padding:0 12px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;cursor:pointer}
+.chip .ic{width:17px;height:17px}
+.chip[aria-pressed="true"]{background:var(--a-mint);border-color:var(--a-g);color:var(--a-gd)}
+.btn{border:0;border-radius:999px;height:48px;padding:0 20px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}
+.btn .ic{width:19px;height:19px}
+.btn-p{background:var(--a-g);color:#fff}
+.btn-p:hover{background:var(--a-gd)}
+.btn-o{background:var(--a-bg);color:var(--a-gd);box-shadow:inset 0 0 0 1.5px var(--a-g)}
+.btn-t{background:transparent;color:var(--a-gd);padding:0 10px}
+.btn-r{background:var(--a-red);color:#fff}
+.btn[disabled]{background:#E3E8E5;color:#5E6E64;cursor:not-allowed;box-shadow:none}
+.wide{width:100%}
+.card{background:var(--a-bg);border:1px solid var(--a-line);border-radius:16px;padding:14px}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--a-sub)}
+.mono{font-family:var(--mono);font-size:12px}
+.sp{padding:14px 16px 24px;display:flex;flex-direction:column;gap:12px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px 4px 8px}
+.status i{width:9px;height:9px;border-radius:50%;display:block}
+.st-red{background:var(--a-redsoft);color:#9A2214}.st-red i{background:var(--a-red)}
+.st-amb{background:var(--a-ambsoft);color:var(--a-ambink)}.st-amb i{background:var(--a-amb)}
+.st-grn{background:var(--a-mint);color:var(--a-gd)}.st-grn i{background:var(--a-done)}
+.toggle{width:52px;height:32px;border-radius:16px;border:2px solid #74867A;background:#E6EDE8;position:relative;cursor:pointer;flex:none;padding:0}
+.toggle::after{content:"";position:absolute;top:5px;left:5px;width:18px;height:18px;border-radius:50%;background:#74867A;transition:all .15s}
+.toggle[aria-checked="true"]{background:var(--a-g);border-color:var(--a-g)}
+.toggle[aria-checked="true"]::after{left:23px;top:3px;width:22px;height:22px;background:#fff}
+.row{display:flex;align-items:center;gap:12px}
+.grow{flex:1;min-width:0}
+.sub{color:var(--a-sub);font-size:13px}
+.tile{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:var(--a-mint);color:var(--a-gd)}
+.toast{position:absolute;left:12px;right:12px;bottom:84px;background:#17261D;color:#fff;border-radius:12px;padding:12px 14px;font-size:14px;display:flex;gap:10px;align-items:center;z-index:40;animation:tin .2s ease-out}
+.toast .ic{color:#7FDCA9}
+@keyframes tin{from{transform:translateY(10px);opacity:0}}
+
+/* map */
+.map{position:absolute;inset:0;overflow:hidden;background:var(--a-map)}
+.mapsvg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;width:38px;height:46px;border:0;background:transparent;padding:0;transform:translate(-50%,-100%);cursor:pointer;z-index:3}
+.pin .h{position:absolute;left:3px;top:0;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.25);border:2.5px solid #fff}
+.pin .g{position:absolute;left:3px;top:0;width:32px;height:32px;display:grid;place-items:center;color:#fff}
+.pin .g .ic{width:17px;height:17px;stroke-width:2.6}
+.pin.red .h{background:var(--a-red)} .pin.amb .h{background:var(--a-amb)} .pin.amb .g{color:#3D2B00} .pin.grn .h{background:var(--a-done)}
+.pin .k{position:absolute;right:-1px;top:-4px;width:17px;height:17px;border-radius:50%;background:#fff;color:var(--a-ink);display:grid;place-items:center;box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.pin .k .ic{width:11px;height:11px;stroke-width:3}
+.pin.sel .h{border-color:var(--a-ink);transform:rotate(-45deg) scale(1.15)}
+.pin.dim{opacity:.25}
+.pulse{position:absolute;left:19px;top:16px;width:10px;height:10px;margin:-5px;border-radius:50%;background:rgba(198,47,30,.35);animation:pp 1.8s ease-out infinite;z-index:-1}
+@keyframes pp{to{transform:scale(6);opacity:0}}
+.me{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:var(--a-gd);border:3px solid #fff;box-shadow:0 0 0 8px rgba(14,90,53,.18);z-index:4;transition:left 2.2s ease-in-out, top 2.2s ease-in-out}
+.melbl{position:absolute;font-size:11px;font-weight:700;background:#fff;padding:1px 6px;border-radius:6px;transform:translate(-50%,14px);z-index:4;white-space:nowrap;transition:left 2.2s ease-in-out, top 2.2s ease-in-out}
+.mtop{position:absolute;left:0;right:0;top:0;padding:10px 12px 0;z-index:6;display:flex;flex-direction:column;gap:8px}
+.mtop .chip{box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.offl{align-self:flex-start;background:rgba(255,255,255,.95);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.12);color:var(--a-sub)}
+.offl b{color:var(--a-gd)}
+.offl .ic{width:14px;height:14px}
+.legend{position:absolute;left:12px;bottom:14px;z-index:5;background:rgba(255,255,255,.96);border-radius:12px;padding:8px 10px;font-size:12px;display:flex;flex-direction:column;gap:3px;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%;display:block}
+.fab{position:absolute;right:14px;bottom:14px;z-index:5;height:56px;border-radius:18px;border:0;background:var(--a-g);color:#fff;font-weight:700;font-size:15px;padding:0 18px 0 14px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 10px rgba(14,90,53,.35);cursor:pointer}
+.fab .ic{width:24px;height:24px}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:20;background:var(--a-bg);border-radius:24px 24px 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.18);padding:6px 16px 16px;max-height:94%;overflow-y:auto;animation:sup .22s ease-out;scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+@keyframes sup{from{transform:translateY(40px);opacity:.4}}
+.handle{width:36px;height:4px;border-radius:2px;background:#B9C7BE;margin:4px auto 10px}
+.kv{display:grid;grid-template-columns:118px minmax(0,1fr);gap:9px 10px;font-size:14px;margin:12px 0}
+.kv dt{color:var(--a-sub)}
+.kv dd{margin:0;font-weight:700;display:flex;gap:6px;align-items:center;min-width:0}
+.kv dd .ic{width:17px;height:17px;color:var(--a-g)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:6px 0 12px}
+.steps div{font-size:12px;font-weight:700;color:var(--a-sub);display:flex;flex-direction:column;gap:5px}
+.steps div::before{content:"";height:5px;border-radius:3px;background:var(--a-line)}
+.steps .on{color:var(--a-ink)} .steps .on.s1::before{background:var(--a-red)} .steps .on.s2::before{background:var(--a-amb)} .steps .on.s3::before{background:var(--a-done)}
+.warn{background:var(--a-redsoft);color:#8A1E11;border-radius:12px;padding:10px 12px;font-size:14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.warn .ic{color:var(--a-red);margin-top:1px}
+.okline{background:var(--a-mint);color:var(--a-gd);border-radius:12px;padding:10px 12px;font-size:14px;display:flex;gap:10px;align-items:center;margin-bottom:10px;font-weight:700}
+.scrim{position:absolute;inset:0;background:rgba(10,25,16,.45);z-index:19;border:0;width:100%;cursor:pointer}
+
+/* lists */
+.req{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--a-line);background:transparent;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;cursor:pointer;align-items:flex-start}
+.req .tile.red{background:var(--a-redsoft);color:var(--a-red)} .req .tile.amb{background:var(--a-ambsoft);color:var(--a-ambink)} .req .tile.grn{background:var(--a-mint);color:var(--a-gd)}
+.req h3{font-size:15px;margin:0 0 3px;line-height:1.3}
+.req .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.tabs{display:flex;border-bottom:1px solid var(--a-line);padding:0 8px;background:var(--a-bg)}
+.tabs button{flex:1;border:0;background:transparent;height:46px;font-weight:700;font-size:14px;color:var(--a-sub);cursor:pointer;border-bottom:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--a-gd);border-bottom-color:var(--a-g)}
+.tabs .c{font-family:var(--mono);font-size:11px;margin-left:4px}
+
+/* form */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label,.field .lbl2{font-size:14px;font-weight:700}
+.input{border:1.5px solid #9DB0A3;border-radius:12px;padding:12px;font:inherit;font-size:15px;background:var(--a-bg);color:var(--a-ink);width:100%}
+.input:focus{outline:none;border-color:var(--a-g);box-shadow:0 0 0 3px rgba(23,128,77,.2)}
+textarea.input{resize:none;height:76px}
+.typegrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.typegrid button{border:1.5px solid var(--a-line);background:var(--a-bg);border-radius:14px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12px;font-weight:700;cursor:pointer;color:var(--a-ink)}
+.typegrid button[aria-pressed="true"]{border-color:var(--a-g);background:var(--a-mint);color:var(--a-gd)}
+.dup{border:2px solid var(--a-amb);background:var(--a-ambsoft);border-radius:16px;padding:12px}
+.dup h3{margin:0;font-size:15px;color:var(--a-ambink);display:flex;gap:8px;align-items:center}
+.dup .match{background:var(--a-bg);border-radius:12px;padding:10px;margin:10px 0;display:flex;gap:10px}
+.bar{height:6px;border-radius:3px;background:#E3D2A0;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--a-amb)}
+
+/* stock */
+.stock{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--a-line)}
+.stepper{display:flex;align-items:center;border:1.5px solid var(--a-line);border-radius:999px;height:44px}
+.stepper button{width:40px;height:40px;border:0;background:transparent;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--a-gd)}
+.stepper button:hover{background:var(--a-soft)}
+.stepper output{min-width:40px;text-align:center;font-family:var(--mono);font-weight:600;font-size:15px}
+.need{font-size:12px;font-weight:700;margin-top:3px}
+.need.short{color:#A42716}.need.ok{color:var(--a-gd)}
+.hero{background:var(--a-gd);color:#fff;border-radius:18px;padding:14px 16px}
+.hero .big{font-size:26px;font-weight:700;line-height:1.1;margin:2px 0}
+.hero .sub{color:#CDEBD9}
+
+/* team */
+.vol{position:absolute;z-index:4;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px}
+.vol .av{width:30px;height:30px;border-radius:50%;background:var(--a-g);color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center;border:2.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.vol.stale .av{background:#8A968E}
+.vol span{font-size:11px;font-weight:700;background:#fff;border-radius:6px;padding:0 5px}
+.avl{width:40px;height:40px;border-radius:50%;background:var(--a-g);color:#fff;font-weight:700;display:grid;place-items:center;flex:none}
+.avl.stale{background:#8A968E}
+.batt{font-family:var(--mono);font-size:11px;font-weight:600}
+.batt.low{color:#A42716}
+
+/* mesh */
+.radar{height:178px;position:relative;background:linear-gradient(var(--a-soft),var(--a-bg));border-bottom:1px solid var(--a-line);flex:none}
+.radar svg{position:absolute;inset:0;width:100%;height:100%}
+.meshwrap{position:absolute;inset:0;display:flex;flex-direction:column}
+.msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:none}
+.msgs::-webkit-scrollbar{display:none}
+.msg{max-width:82%;align-self:flex-start;display:flex;flex-direction:column;gap:2px}
+.msg .who{font-size:12px;font-weight:700;color:var(--a-sub);padding-left:4px}
+.msg .b{background:var(--a-soft);border:1px solid var(--a-line);border-radius:4px 16px 16px 16px;padding:9px 12px;font-size:14.5px}
+.msg .m{font-size:11px;color:var(--a-sub);padding-left:4px;display:flex;gap:4px;align-items:center}
+.msg .m .ic{width:13px;height:13px}
+.msg.mine{align-self:flex-end}
+.msg.mine .b{background:var(--a-g);color:#fff;border:0;border-radius:16px 4px 16px 16px}
+.msg.mine .m{justify-content:flex-end;padding-right:4px}
+.msg.pri .b{background:var(--a-redsoft);border-color:#F0B9B0}
+.msg.mine.pri .b{background:var(--a-red);color:#fff}
+.compose{flex:none;display:flex;gap:8px;padding:8px 10px;border-top:1px solid var(--a-line);background:var(--a-bg);align-items:center}
+.compose input{flex:1;height:46px;border-radius:999px;border:1.5px solid #9DB0A3;padding:0 16px;font:inherit;background:var(--a-bg);color:var(--a-ink);min-width:0}
+.compose input:focus{outline:none;border-color:var(--a-g)}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:var(--a-g);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+
+/* sos */
+.sosw{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:18px 18px 16px;gap:14px;text-align:center}
+.sosring{position:relative;width:230px;height:230px;flex:none}
+.sosring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.bigsos{position:absolute;inset:22px;border-radius:50%;border:0;background:var(--a-red);color:#fff;font-size:44px;font-weight:700;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 30px rgba(198,47,30,.45), inset 0 -6px 0 rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.bigsos small{font-size:13px;letter-spacing:0;font-weight:700;opacity:.92}
+.bigsos:active{transform:scale(.98)}
+.sosopts{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left}
+.sosact{position:absolute;inset:0;background:var(--a-red);color:#fff;display:flex;flex-direction:column;align-items:center;padding:18px;gap:12px;text-align:center}
+.beacon{position:relative;width:120px;height:120px;flex:none;margin-top:6px}
+.beacon i{position:absolute;inset:0;border-radius:50%;border:3px solid rgba(255,255,255,.7);animation:bc 2s ease-out infinite}
+.beacon i:nth-child(2){animation-delay:.66s}.beacon i:nth-child(3){animation-delay:1.33s}
+@keyframes bc{from{transform:scale(.45);opacity:1}to{transform:scale(1.25);opacity:0}}
+.beacon b{position:absolute;inset:30px;border-radius:50%;background:#fff;color:var(--a-red);display:grid;place-items:center;font-size:20px;letter-spacing:.06em}
+.soslist{width:100%;background:rgba(0,0,0,.18);border-radius:16px;padding:6px 14px;text-align:left}
+.soslist div{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:14px}
+.soslist div:last-child{border-bottom:0}
+.soslist .ic{width:19px;height:19px}
+.btn-w{background:#fff;color:#8E1D10}
+.btn-wo{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.8)}
+
+/* first aid */
+.fagrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fa{border:1px solid var(--a-line);background:var(--a-bg);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;text-align:left;cursor:pointer;color:var(--a-ink);min-height:104px}
+.fa:hover{border-color:var(--a-g)}
+.fa .tile{width:38px;height:38px;background:var(--a-redsoft);color:var(--a-red)}
+.fa b{font-size:15px;line-height:1.2}
+.fa span{font-size:12px;color:var(--a-sub);line-height:1.25}
+.fa.crit .tile{background:var(--a-red);color:#fff}
+.callbar{display:flex;align-items:center;gap:10px;background:var(--a-redsoft);border-radius:14px;padding:10px 12px}
+.callbar b{color:#8A1E11}
+.step{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1px solid var(--a-line);border-radius:16px}
+.step .num{width:52px;height:52px;border-radius:14px;background:var(--a-mint);color:var(--a-gd);display:grid;place-items:center;flex:none;position:relative}
+.step .num .ic{width:28px;height:28px}
+.step .num em{position:absolute;top:-6px;left:-6px;width:22px;height:22px;border-radius:50%;background:var(--a-gd);color:#fff;font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center}
+.step p{margin:0;font-size:16.5px;line-height:1.35}
+.step.dont .num{background:var(--a-redsoft);color:var(--a-red)}
+.metro{display:flex;align-items:center;gap:14px;background:var(--a-soft);border-radius:16px;padding:12px}
+.beat{width:56px;height:56px;border-radius:50%;background:var(--a-g);flex:none;display:grid;place-items:center;color:#fff}
+.beat.go{animation:beat .545s ease-out infinite}
+@keyframes beat{0%{transform:scale(1.18)}60%{transform:scale(.92)}100%{transform:scale(.92)}}
+
+/* hazards */
+.hz-banner{background:var(--a-ink);color:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.hz-banner .chip{background:#24392C;border-color:#3A5444;color:#fff;height:32px;font-size:13px}
+.hz-banner .chip[aria-pressed="true"]{background:#fff;color:var(--a-ink)}
+.zitem{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--a-line)}
+.zitem .tile{background:var(--a-redsoft);color:var(--a-red)}
+.zitem .tile.o{background:#FFE9D6;color:#9A4A00}
+.alertov{position:absolute;inset:0;z-index:50;background:rgba(17,40,27,.6);display:flex;align-items:flex-end;padding:12px}
+.alertbox{background:var(--a-bg);border-radius:24px;padding:20px 18px 16px;width:100%;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.alertbox .tile{width:72px;height:72px;border-radius:22px;background:#FFE9D6;color:#B35200;animation:shake .5s ease-in-out 3}
+.alertbox .tile .ic{width:38px;height:38px}
+.alertbox h3{margin:0;font-size:22px}
+.alertbox .dist{font-family:var(--mono);font-weight:600;font-size:14px;background:#FFE9D6;color:#7A3D00;padding:3px 10px;border-radius:999px}
+.vibe{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--a-sub)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px) rotate(-4deg)}40%{transform:translateX(5px) rotate(4deg)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.screen.buzz{animation:shake .45s ease-in-out 2}
+
+/* privacy */
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cmp .card{padding:10px;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.cmp .card.on{border:2px solid var(--a-g);background:var(--a-soft)}
+.mini{height:76px;border-radius:10px;background:var(--a-map);position:relative;overflow:hidden;margin-top:4px}
+.mini svg{position:absolute;inset:0;width:100%;height:100%}
+.opt{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--a-line)}
+.opt:last-child{border-bottom:0}
+.opt b{display:block;font-size:15px}
+.select{border:1.5px solid #9DB0A3;border-radius:10px;height:40px;padding:0 10px;font:inherit;font-size:14px;background:var(--a-bg);color:var(--a-ink)}
+
+/* assistant */
+.qchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.qchips button{border:1.5px solid var(--a-g);background:var(--a-bg);color:var(--a-gd);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.qchips button:hover{background:var(--a-mint)}
+.bot .b{background:var(--a-bg);border:1px solid var(--a-line)}
+.typing span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--a-sub);margin-right:3px;animation:tp 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes tp{50%{opacity:.25}}
+.num-pill{font-family:var(--mono);font-weight:600;background:var(--a-mint);color:var(--a-gd);padding:1px 7px;border-radius:6px}
+
+/* drawer */
+.drawer{position:absolute;top:0;bottom:0;left:0;width:310px;z-index:30;background:var(--a-bg);border-radius:0 24px 24px 0;display:flex;flex-direction:column;animation:din .2s ease-out;box-shadow:6px 0 24px rgba(0,0,0,.2)}
+@keyframes din{from{transform:translateX(-30px);opacity:.5}}
+.dhead{padding:44px 18px 14px;background:var(--a-gd);color:#fff;border-radius:0 24px 0 0}
+.dhead .avl{background:#fff;color:var(--a-gd);width:48px;height:48px;font-size:17px}
+.dhead .seg2{display:flex;background:rgba(255,255,255,.14);border-radius:999px;padding:3px;margin-top:12px}
+.dhead .seg2 button{flex:1;border:0;background:transparent;color:#fff;border-radius:999px;height:34px;font-weight:700;font-size:13px;cursor:pointer}
+.dhead .seg2 button[aria-pressed="true"]{background:#fff;color:var(--a-gd)}
+.dlist{flex:1;overflow-y:auto;padding:8px 10px;scrollbar-width:none}
+.dlist::-webkit-scrollbar{display:none}
+.ditem{display:flex;align-items:center;gap:14px;width:100%;border:0;background:transparent;height:46px;border-radius:999px;padding:0 14px;font-weight:700;font-size:14.5px;cursor:pointer;color:var(--a-ink);text-align:left}
+.ditem:hover{background:var(--a-soft)}
+.ditem[aria-current="page"]{background:var(--a-mint);color:var(--a-gd)}
+.ditem .ct{margin-left:auto;font-family:var(--mono);font-size:12px}
+.ditem.soon{color:#5E6E64;cursor:default}
+.ditem.soon:hover{background:transparent}
+.soonchip{margin-left:auto;font-size:11px;font-weight:700;background:#EEF1EF;color:#55635A;border-radius:6px;padding:2px 7px}
+.dsec{font-size:12px;font-weight:700;color:var(--a-sub);text-transform:uppercase;letter-spacing:.08em;padding:12px 14px 4px}
+.dfoot{border-top:1px solid var(--a-line);padding:12px 18px;font-size:12.5px;color:var(--a-sub);display:flex;flex-direction:column;gap:4px}
+.dfoot b{color:var(--a-ink)}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+</style>
+
+<header class="top">
+  <div class="brand">
+    <div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7.2 6.2 16M13 7.2l4.8 8.8M7.4 18h9.2"/></svg></div>
+    <div>
+      <h1>ReliefMesh</h1>
+      <p>Offline-first coordination for volunteer relief teams. Android app screens, every one clickable.</p>
+    </div>
+  </div>
+  <div class="rolebox">
+    <span id="roleLabel">View as</span>
+    <div class="seg" role="group" aria-labelledby="roleLabel">
+      <button type="button" id="roleCoord" data-role="coordinator" aria-pressed="true">Coordinator</button>
+      <button type="button" id="roleVol" data-role="volunteer" aria-pressed="false">Volunteer</button>
+    </div>
+  </div>
+</header>
+
+<div class="stage">
+  <nav class="index" id="index" aria-label="Screens"><h2>Screens</h2></nav>
+  <div class="phone-wrap" id="phoneWrap">
+    <div class="phone" id="phone"><div class="screen" id="screen" aria-label="ReliefMesh app on an Android phone"></div></div>
+  </div>
+  <section class="notes" id="notes" aria-live="polite"></section>
+</div>
+
+<script>
+(function(){
+const I = {
+  menu:'M4 6h16M4 12h16M4 18h16', back:'M15 5l-7 7 7 7M8 12h12',
+  map:'<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
+  list:'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  mesh:'<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7.2 6.2 16M13 7.2l4.8 8.8M7.4 18h9.2"/>',
+  firstaid:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M12 10.5v6M9 13.5h6"/>',
+  bot:'<rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M10 16h4"/>',
+  shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/>',
+  eyeoff:'<path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a15 15 0 0 1-3 3.5M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+  box:'<path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/>',
+  alert:'<path d="M12 3.5 2.5 20h19L12 3.5z"/><path d="M12 10v4.5M12 17.2h.01"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c.6-4 3.8-6.5 8-6.5s7.4 2.5 8 6.5"/>',
+  plus:'M12 5v14M5 12h14', minus:'M5 12h14', check:'M5 12.5l4.5 4.5L19 7.5', x:'M6 6l12 12M18 6 6 18',
+  send:'<path d="M4 12 20 4l-6 16-3-7-7-1z"/>', chev:'M9 6l6 6-6 6',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+  nav:'<path d="M12 3 5 20l7-4 7 4-7-17z"/>', clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  pin:'<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+  drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+  food:'<path d="M3 11h18a9 9 0 0 1-18 0zM8 7c0-1.5 1-2 1-3M12 7c0-1.5 1-2 1-3M16 7c0-1.5 1-2 1-3"/>',
+  home:'<path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/>',
+  medical:'<path d="M9.5 3h5v6.5H21v5h-6.5V21h-5v-6.5H3v-5h6.5z"/>',
+  layers:'<path d="M12 3 2 8l10 5 10-5-10-5zM2 13l10 5 10-5"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  vibe:'<rect x="8" y="4" width="8" height="16" rx="1.5"/><path d="M4 8v8M20 8v8"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  sync:'<path d="M20 11a8 8 0 0 0-14.6-4.6L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.6L20 16M20 20v-4h-4"/>',
+  chart:'M4 20V11M10 20V5M16 20v-7M21 20H3', link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4l2-2zM10 21h4"/>',
+  merge:'<path d="M7 4v6a4 4 0 0 0 4 4h7M15 11l3 3-3 3M7 20v-3"/>',
+  camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  target:'<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+  heart:'<path d="M12 20s-8-4.8-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.2-8 11-8 11z"/>',
+  flame:'<path d="M12 21a6 6 0 0 0 6-6c0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-3-2 2-3 4-3 7a6 6 0 0 0 6 6z"/>',
+  bone:'<path d="M7 4.5a2.5 2.5 0 0 0-2.6 4l11 11a2.5 2.5 0 1 0 4-2.6 2.5 2.5 0 1 0-2.4-4L8 3.9a2.5 2.5 0 0 0-1 .6z"/>',
+  bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>', thermo:'<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/>',
+  wave:'<path d="M2 16c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2M2 20c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><circle cx="12" cy="7" r="3"/>',
+  snake:'<path d="M5 19c3 0 3-4 6-4s3 4 6 4 3-6 0-8-6 0-6-3 3-4 6-4"/>',
+  flask:'<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/>',
+  snow:'M12 2v20M3.5 7l17 10M20.5 7l-17 10', eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  truck:'<path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  radio:'<circle cx="12" cy="12" r="2"/><path d="M8 8a5.6 5.6 0 0 0 0 8M16 8a5.6 5.6 0 0 1 0 8M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14"/>',
+  mute:'<path d="M4 9h4l5-4v14l-5-4H4zM17 9l4 6M21 9l-4 6"/>', sound:'<path d="M4 9h4l5-4v14l-5-4H4zM16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>',
+  hand:'<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 11V4a1.5 1.5 0 0 1 3 0v7M14 11V5.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7 6 6 0 0 1-5-3l-2.5-4.5a1.5 1.5 0 0 1 2.6-1.5L8 15"/>',
+  ban:'<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>', bed:'<path d="M3 18V7M3 13h18v5M21 13a3 3 0 0 0-3-3h-7v3"/><circle cx="7" cy="10.5" r="1.8"/>',
+  sugar:'<rect x="5" y="5" width="14" height="14" rx="2"/><path d="M5 12h14M12 5v14"/>', brain:'<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a2 2 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/>',
+  smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c2 2 5 2 7 0M9 9.5h.01M15 9.5h.01"/>', arm:'<path d="M6 20V10l4-6M18 20V10l-4-6"/>', speech:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h7"/>',
+  wind:'<path d="M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h7"/>', tag:'<path d="M3 12V4h8l10 10-8 8L3 12z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+  battery:'<rect x="3" y="7" width="16" height="10" rx="2"/><path d="M22 10v4M6 10v4M9 10v4M12 10v4"/>', bt:'<path d="M7 7l10 10-5 4V3l5 4L7 17"/>',
+  nosig:'<path d="M3 20h2M8 20v-4M13 20v-8M18 20V7M14 4l6 6M20 4l-6 6"/>'
+};
+function ic(n){ const d=I[n]||''; return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+(d.charAt(0)==='<'?d:'<path d="'+d+'"/>')+'</svg>'; }
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const TYPES = { water:{label:'Clean water',icon:'drop'}, food:{label:'Food',icon:'food'}, medical:{label:'Medical',icon:'medical'}, shelter:{label:'Shelter',icon:'home'} };
+const ST = {
+  unassigned:{label:'Unassigned', pill:'Urgent · Unassigned', cls:'st-red', pin:'red', k:'alert', tile:'red'},
+  assigned:{label:'Assigned', pill:'In progress · Assigned', cls:'st-amb', pin:'amb', k:'clock', tile:'amb'},
+  fulfilled:{label:'Fulfilled', pill:'Resolved · Fulfilled', cls:'st-grn', pin:'grn', k:'check', tile:'grn'}
+};
+const STOCK = [
+  {k:'water',name:'Drinking water',unit:'cartons',icon:'drop'},
+  {k:'firstaid',name:'First-aid kits',unit:'kits',icon:'firstaid'},
+  {k:'food',name:'Food packs',unit:'packs',icon:'food'},
+  {k:'tarp',name:'Tarpaulins',unit:'sheets',icon:'home'},
+  {k:'tabs',name:'Purification tablets',unit:'tablets',icon:'drop'},
+  {k:'fuel',name:'Fuel',unit:'jerry cans',icon:'flame'},
+  {k:'generator',name:'Generator',unit:'unit',icon:'bolt'}
+];
+const HUBS = [
+  {name:'Central hub (Basic Education School No. 4)',when:'Counted 2 hrs ago by Ko Min',items:[['Drinking water','140 cartons'],['Food packs','310 packs'],['Tarpaulins','24 sheets']]},
+  {name:'Clinic store room',when:'Counted 5 hrs ago by Daw Nwe',items:[['First-aid kits','45 kits'],['ORS sachets','600 sachets'],['Purification tablets','2,000 tablets']]},
+  {name:'Monastery kitchen',when:'Counted yesterday 18:10',items:[['Rice','12 sacks (48 kg)'],['Cooking oil','30 litres'],['Generator','1 unit, 60% fuel']]}
+];
+const FA = [
+  {k:'cpr',n:'CPR',t:'Not breathing',top:1,ic:'heart',s:[['user','Tap their shoulders and shout. Not breathing normally? Start CPR now.'],['phone','Shout for help. Call 192 or press SOS.'],['hand','Push hard and fast in the middle of the chest. 5 cm deep, 100 to 120 times a minute.'],['clock','Keep going until help arrives or they start breathing.']]},
+  {k:'choking',n:'Choking',t:'Cannot breathe or speak',top:1,ic:'wind',s:[['speech','Ask: "Are you choking?" If they can cough, tell them to keep coughing.'],['hand','Give 5 firm back blows between the shoulder blades.'],['user','Give 5 belly thrusts: fist above the belly button, pull in and up.'],['heart','Repeat 5 and 5. If they stop responding, start CPR.']]},
+  {k:'bleeding',n:'Severe bleeding',t:'Blood will not stop',top:1,ic:'drop',s:[['hand','Press hard on the wound with a clean cloth.'],['clock','Keep pressing. Do not lift to check. Add more cloth on top.'],['arm','Raise the injured arm or leg if it is not broken.'],['alert','Blood spurting or soaking through? Tie a tight band above the wound. Write down the time.']]},
+  {k:'burns',n:'Burns',t:'Fire, hot water, chemicals',top:1,ic:'flame',s:[['ban','Move away from the heat.'],['drop','Cool the burn under clean, cool running water for 20 minutes.'],['hand','Take off rings and tight things. Do not pull off clothing that is stuck.'],['x','Cover loosely with clean plastic or cloth. No butter, toothpaste or ice.']]},
+  {k:'fracture',n:'Broken bone',t:'Fracture, bad sprain',ic:'bone',s:[['ban','Keep the injured part still. Do not try to straighten it.'],['box','Support it with a splint: a stick, rolled paper or folded cloth.'],['snow','Put a cold, wet cloth on it for swelling.'],['alert','Bone through the skin? Cover with clean cloth. Do not push it back.']]},
+  {k:'allergy',n:'Allergic reaction',t:'Swelling, hard breathing',top:1,ic:'alert',s:[['eye','Look for swollen face or lips, hard breathing, rash.'],['hand','If they carry an adrenaline pen, help them push it into the outer thigh.'],['phone','Call 192 or press SOS.'],['bed','Hard to breathe: let them sit up. Feeling faint: lie down, legs up.']]},
+  {k:'heart',n:'Heart attack',t:'Chest pain',top:1,ic:'heart',s:[['eye','Look for chest pain or pressure, pain in arm or jaw, sweating.'],['bed','Sit them down. Keep them calm.'],['hand','Give one 300 mg aspirin to chew, if they are not allergic.'],['heart','Get help. If they stop breathing, start CPR.']]},
+  {k:'stroke',n:'Stroke',t:'Face drooping, weak arm',top:1,ic:'brain',s:[['smile','Face: ask them to smile. Does one side droop?'],['arm','Arms: ask them to raise both arms. Does one drift down?'],['speech','Speech: is it slurred or strange?'],['clock','Time: get medical help now. Note the time it started. No food or drink.']]},
+  {k:'heat',n:'Heat stroke',t:'Very hot, confused',ic:'thermo',s:[['eye','Look for very hot skin, confusion, fainting.'],['home','Move to shade. Take off extra clothing.'],['drop','Cool fast: wet the skin and fan. Cold cloths on neck, armpits, groin.'],['phone','Sips of water only if fully awake. Get medical help.']]},
+  {k:'drowning',n:'Drowning',t:'Pulled from water',ic:'wave',s:[['ban','Do not go into the water unless trained. Throw a rope or float.'],['eye','On land, check if they are breathing.'],['heart','Not breathing: give 5 rescue breaths, then start CPR.'],['bed','Breathing: turn them on their side and keep them warm.']]},
+  {k:'shock-e',n:'Electric shock',t:'Touched a live wire',ic:'bolt',s:[['ban','Do not touch them until the power is off.'],['hand','Switch off the power, or push the wire away with dry wood.'],['heart','Check breathing. Start CPR if needed.'],['drop','Cool any burns with water. Get medical help.']]},
+  {k:'snake',n:'Snake bite',t:'Bite marks, pain',ic:'snake',s:[['ban','Move away from the snake. Keep the person still and calm.'],['arm','Keep the bitten arm or leg still and at heart level.'],['x','Take off rings and tight things. Do not cut, suck or tie the bite.'],['truck','Carry them to a clinic. Remember the snake’s colour and shape.']]},
+  {k:'seizure',n:'Seizure',t:'Shaking, fitting',ic:'brain',s:[['box','Move hard objects away. Put something soft under the head.'],['ban','Do not hold them down. Put nothing in their mouth.'],['clock','Time it. Longer than 5 minutes: get medical help.'],['bed','When it stops, turn them on their side. Stay with them.']]},
+  {k:'faint',n:'Fainting',t:'Collapsed, then wakes',ic:'bed',s:[['bed','Lay them flat on their back.'],['arm','Raise their legs about 30 cm.'],['wind','Loosen tight clothing. Give fresh air.'],['alert','Not awake within 1 minute? Check breathing and get help.']]},
+  {k:'sugar',n:'Low blood sugar',t:'Diabetes, shaking',ic:'sugar',s:[['eye','Look for shaking, sweating, confusion in a person with diabetes.'],['hand','Awake and can swallow? Give sugar: juice, sweets, or sugar in water.'],['clock','Rest 15 minutes. Not better? Give more sugar.'],['ban','Not awake? Give nothing by mouth. Turn on their side, get help.']]},
+  {k:'head',n:'Head injury',t:'Hit on the head',ic:'user',s:[['ban','Keep them still. If the neck may be hurt, do not move the head.'],['hand','Press a clean cloth on any bleeding.'],['eye','Watch for vomiting, sleepiness, confusion, odd-sized pupils.'],['phone','Any of these signs: get medical help fast.']]},
+  {k:'shock',n:'Shock',t:'Pale, cold, weak',ic:'heart',s:[['eye','Look for pale, cold, sweaty skin, fast breathing, weakness.'],['bed','Lay them down. Raise the legs if not injured.'],['home','Keep them warm with a blanket. Treat any bleeding.'],['ban','No food or drink. Get medical help.']]},
+  {k:'poison',n:'Poisoning',t:'Swallowed or touched',ic:'flask',s:[['eye','Find out what, how much and when. Keep the container.'],['ban','Do not make them vomit.'],['drop','On skin or in eyes: rinse with clean water for 15 minutes.'],['heart','Get medical help. Start CPR if they stop breathing.']]},
+  {k:'cold',n:'Hypothermia',t:'Very cold, shivering',ic:'snow',s:[['eye','Look for shivering, slow speech, cold pale skin.'],['home','Get out of wind and rain. Take off wet clothes.'],['bed','Wrap in dry blankets and cover the head.'],['drop','Warm sweet drinks if fully awake. No alcohol.']]},
+  {k:'dehyd',n:'Dehydration',t:'Diarrhoea, thirst',ic:'drop',s:[['eye','Look for thirst, dry mouth, little urine, dizziness.'],['drop','Give ORS (oral rehydration salts) mixed in clean water.'],['sugar','No ORS? Mix 6 level teaspoons of sugar and half a teaspoon of salt in 1 litre of clean water.'],['clock','Give small sips often. Small children or very weak: get medical help.']]}
+];
+
+const S = {
+  role:'coordinator', screen:'map', sel:null, filter:'all', zonesOn:true, reqTab:'all', drawer:false, toast:null,
+  privacy:{on:false, names:true, round:true, ids:true, faces:true, keep:'30 days'},
+  stock:{water:12, firstaid:20, food:50, tarp:4, tabs:300, fuel:2, generator:1}, invTab:'truck',
+  requests:[
+    {id:'REQ-0412',type:'water',status:'unassigned',title:'Clean drinking water needed for 20 households',x:96,y:178,place:'Lane 4, Riverside Ward',zone:'Lane 4 & Market Rd',name:'Daw Khin Myint',house:'No. 18',vol:null,note:'',updated:'15 mins ago via local cache',needs:{water:20},people:'20 households',dist:'350 m',tag:'K7-42',reports:1},
+    {id:'REQ-0409',type:'medical',status:'assigned',title:'Elderly man with deep leg wound needs first aid',x:214,y:136,place:'Market Rd, near the tea shop',zone:'Market Rd (north)',name:'U Tun Lwin',house:'No. 7',vol:'Aung',note:'En route',updated:'4 mins ago via mesh (2 hops)',needs:{firstaid:1},people:'1 person',dist:'600 m',tag:'R2-18',reports:1},
+    {id:'REQ-0401',type:'food',status:'fulfilled',title:'Food packs delivered',x:300,y:428,place:'East bank, Block C',zone:'East bank, Block C',name:'Ma Hla Hla',house:'No. 52',vol:'Thandar',note:'Delivered',updated:'1 hr ago via local cache',needs:{food:15},people:'15 families',dist:'1.2 km',tag:'M9-05',reports:1},
+    {id:'REQ-0415',type:'shelter',status:'unassigned',title:'Tarpaulins for 6 families, roofs collapsed',x:62,y:392,place:'Pagoda St, south end',zone:'Pagoda St (south)',name:'Ko Zaw Win',house:'No. 31',vol:null,note:'',updated:'22 mins ago via mesh (1 hop)',needs:{tarp:6},people:'6 families',dist:'900 m',tag:'T4-63',reports:1},
+    {id:'REQ-0410',type:'food',status:'assigned',title:'Rice and oil for the monastery shelter (85 people)',x:212,y:388,place:'Monastery, River Rd',zone:'Monastery compound',name:'Monastery office',house:'',vol:'Thandar',note:'Loading truck',updated:'9 mins ago via mesh (1 hop)',needs:{food:40},people:'85 people',dist:'700 m',tag:'B8-21',reports:1},
+    {id:'REQ-0416',type:'medical',status:'unassigned',title:'Pregnant woman needs transport to the clinic',x:356,y:122,place:'East bank, ferry steps',zone:'East bank (north)',name:'Daw Aye Aye',house:'No. 3',vol:null,note:'',updated:'2 mins ago via mesh (3 hops)',needs:{firstaid:1},people:'1 person',dist:'1.4 km',tag:'Q3-77',reports:1},
+    {id:'REQ-0398',type:'water',status:'fulfilled',title:'Purification tablets for 40 families',x:318,y:556,place:'Clinic Rd',zone:'Riverside Ward (north)',name:'Ward office',house:'',vol:'Ko Min',note:'Delivered',updated:'3 hrs ago via local cache',needs:{tabs:200},people:'40 families',dist:'800 m',tag:'D6-30',reports:1}
+  ],
+  zones:[
+    {id:'H-1',type:'Flooding',name:'Flooded road, Market Rd east',x:252,y:248,r:36,lvl:'red',since:'Since 06:40 today'},
+    {id:'H-2',type:'Unstable structure',name:'Bridge 5 is cracked',x:136,y:470,r:28,lvl:'orange',since:'Reported 14:05 by Su Su'},
+    {id:'H-3',type:'Landslide',name:'Landslide risk, east slope',x:346,y:330,r:32,lvl:'orange',since:'Since yesterday'}
+  ],
+  team:[
+    {n:'Aung',x:198,y:168,live:true,line:'Moving to REQ-0409 · 2 min ago',bat:62,via:'Live via mesh · 2 hops',trail:'150,300 156,250 176,212 198,168'},
+    {n:'Thandar',x:214,y:350,live:true,line:'At the monastery · 1 min ago',bat:81,via:'Live via mesh · 1 hop',trail:'150,250 150,330 190,350 214,350'},
+    {n:'Hnin',x:96,y:266,live:true,line:'Stopped · 6 min ago',bat:34,via:'Live via mesh · 1 hop',trail:'40,250 70,252 96,266'},
+    {n:'Ko Min',x:330,y:206,live:false,line:'Last seen 18 min ago',bat:12,via:'Last known position, restored from phone storage',trail:'300,120 312,160 330,206'}
+  ],
+  sharing:true, every:'2 min',
+  msgs:[
+    {from:'Su Su',text:'Bridge 5 is cracked. Use the Market Rd bridge until further notice.',t:'14:05',via:'1 hop',pri:true},
+    {from:'Aung',text:'On my way to REQ-0409 with a first-aid kit. About 10 min.',t:'14:21',via:'2 hops'},
+    {from:'Thandar',text:'Monastery needs 40 food packs. Loading Truck 1 now.',t:'14:26',via:'1 hop'},
+    {from:'Ko Min',text:'Water truck stuck on River Rd. Going round by Pagoda St.',t:'14:28',via:'3 hops'}
+  ],
+  sos:'idle', sosSilent:false, sosConfirm:false, sosAck:false,
+  fa:'cpr', faq:'', beat:false,
+  markMode:false, markType:'Flooding', hazAlert:false, walked:false,
+  chat:[], chatBusy:false,
+  report:{type:'water', people:'20', text:'Families on Lane 4 have had no clean drinking water since the flood. Children are getting sick.', urgent:true, dupDismissed:false}
+};
+const me = ()=> S.role==='coordinator' ? 'Su Su' : 'Aung';
+const lead = 'Su Su';
+
+/* ---------- helpers ---------- */
+function shortages(r){
+  const out=[]; for(const k in r.needs){ const have=S.stock[k]||0; if(have<r.needs[k]){ const m=STOCK.find(s=>s.k===k); out.push({k, need:r.needs[k], have, name:m.name.toLowerCase(), unit:m.unit}); } } return out;
+}
+function needText(r){ const k=Object.keys(r.needs)[0]; if(!k) return 'Nothing from stock'; const m=STOCK.find(s=>s.k===k); return r.needs[k]+' '+m.unit+' '+(m.k==='water'?'of water':m.k==='food'?'of food':m.k==='firstaid'?'':'of '+m.name.toLowerCase()); }
+function who(r){ return S.privacy.on && S.privacy.names ? 'Survivor '+r.tag : (r.name||'Not recorded'); }
+function where(r){ return S.privacy.on && S.privacy.round ? 'Within 100 m of '+r.zone : ((r.house?r.house+', ':'')+r.place); }
+function openReqNeeds(k){ return S.requests.filter(r=>r.status!=='fulfilled' && r.needs[k]).reduce((a,r)=>a+r.needs[k],0); }
+function toast(msg){ S.toast=msg; clearTimeout(toast.t); toast.t=setTimeout(()=>{S.toast=null; render();},2600); }
+
+/* ---------- map ---------- */
+function mapSVG(opts){
+  opts=opts||{};
+  let blocks='';
+  [8,82,166,232,318].forEach(x=>[8,92,172,262,334,404,488,566].forEach(y=>{ blocks+='<rect x="'+x+'" y="'+y+'" width="'+(x===166?50:62)+'" height="'+(y===566?80:64)+'" rx="4"/>'; }));
+  let zones='';
+  if(opts.zones){ S.zones.forEach(z=>{ const c=z.lvl==='red'?'#C62F1E':'#D9730D'; zones+='<circle cx="'+z.x+'" cy="'+z.y+'" r="'+z.r+'" fill="url(#hatch-'+z.lvl+')" stroke="'+c+'" stroke-width="2" stroke-dasharray="5 4"/><g transform="translate('+z.x+','+(z.y-z.r-9)+')"><rect x="-16" y="-9" width="32" height="17" rx="5" fill="'+c+'"/><text x="0" y="3.5" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="JetBrains Mono, monospace">'+z.id+'</text></g>'; }); }
+  let trails='';
+  if(opts.trails){ S.team.forEach(t=>{ trails+='<polyline points="'+t.trail+'" fill="none" stroke="'+(t.live?'#17804D':'#8A968E')+'" stroke-width="3" stroke-dasharray="1 6" stroke-linecap="round"/>'; }); }
+  return '<svg class="mapsvg" viewBox="0 0 380 650" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+
+  '<defs><pattern id="hatch-red" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="rgba(198,47,30,.12)"/><line x1="0" y1="0" x2="0" y2="8" stroke="rgba(198,47,30,.45)" stroke-width="3"/></pattern><pattern id="hatch-orange" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="rgba(217,115,13,.12)"/><line x1="0" y1="0" x2="0" y2="8" stroke="rgba(217,115,13,.45)" stroke-width="3"/></pattern></defs>'+
+  '<rect width="380" height="650" fill="#E8F0EA"/><g fill="#DAE6DD">'+blocks+'</g>'+
+  '<path d="M18 556h70v80H18z" fill="#CBE4CF"/><path d="M240 280c30-6 60 4 70 30-14 20-50 22-70 6z" fill="#CBE4CF"/>'+
+  '<path d="M336 -20 C300 100 350 190 266 290 S112 420 132 520 S70 630 40 690" fill="none" stroke="#B7D8EE" stroke-width="46" stroke-linecap="round"/>'+
+  '<g stroke="#FFFFFF" stroke-linecap="round" fill="none"><path d="M-10 248H390" stroke-width="13"/><path d="M152 -10V660" stroke-width="11"/><path d="M-10 470H390" stroke-width="10"/><path d="M0 150 152 205" stroke-width="7"/><path d="M152 372H300" stroke-width="7"/><path d="M240 470V660" stroke-width="7"/><path d="M62 0V248" stroke-width="6"/><path d="M152 100H260" stroke-width="6"/><path d="M300 372 380 340" stroke-width="6"/></g>'+
+  '<g font-family="Atkinson Hyperlegible, sans-serif" font-size="9.5" font-weight="700" fill="#5D7466" letter-spacing=".08em"><text x="12" y="132">RIVERSIDE WARD</text><text x="168" y="242">MARKET RD</text><text x="160" y="610" transform="rotate(-90 160 610)">PAGODA ST</text><text x="168" y="414">MONASTERY</text><text x="250" y="462">RIVER RD</text><text x="292" y="610">CLINIC</text><text x="300" y="40">EAST BANK</text></g>'+
+  '<g font-family="Atkinson Hyperlegible, sans-serif" font-size="9" fill="#2E5B78" font-style="italic"><text x="298" y="268">Bridge 3</text><text x="74" y="492">Bridge 5</text></g>'+
+  zones+trails+'</svg>';
+}
+function pinHTML(r){
+  const st=ST[r.status]; const dim = S.filter!=='all' && r.type!==S.filter;
+  return '<button type="button" class="pin '+st.pin+(S.sel===r.id?' sel':'')+(dim?' dim':'')+'" style="left:'+r.x+'px;top:'+r.y+'px" data-act="pin" data-id="'+r.id+'" aria-label="'+esc(r.id+', '+TYPES[r.type].label+', '+st.label)+'">'+(r.status==='unassigned'?'<span class="pulse"></span>':'')+'<span class="h"></span><span class="g">'+ic(TYPES[r.type].icon)+'</span><span class="k">'+ic(st.k)+'</span></button>';
+}
+
+/* ---------- screens ---------- */
+const V = {};
+V.map = function(){
+  const f=[['all','All',null],['water','Water','drop'],['food','Food','food'],['medical','Medical','medical'],['shelter','Shelter','home']];
+  let h='<div class="map" data-act="mapbg">'+mapSVG({zones:S.zonesOn});
+  h+='<div class="mtop"><div class="chips">'+f.map(x=>'<button type="button" class="chip" data-act="filter" data-v="'+x[0]+'" aria-pressed="'+(S.filter===x[0])+'">'+(x[2]?ic(x[2]):'')+x[1]+'</button>').join('')+'<button type="button" class="chip" data-act="zones" aria-pressed="'+S.zonesOn+'">'+ic('alert')+'Danger zones</button></div>';
+  h+='<div class="offl">'+ic('sync')+'<span><b>Offline</b> · synced 2 h ago · 4 phones on mesh</span></div></div>';
+  h+=S.requests.map(pinHTML).join('');
+  if(S.role==='volunteer') h+='<span class="me" style="left:150px;top:300px"></span><span class="melbl" style="left:150px;top:300px">You</span>';
+  h+='<div class="legend"><span><i style="background:var(--a-red)"></i>Urgent · unassigned</span><span><i style="background:var(--a-amb)"></i>In progress</span><span><i style="background:var(--a-done)"></i>Resolved</span></div>';
+  h+='<button type="button" class="fab" data-act="go" data-to="report">'+ic('plus')+'Report need</button></div>';
+  if(S.sel) h+=sheetHTML(S.requests.find(r=>r.id===S.sel));
+  return h;
+};
+function sheetHTML(r){
+  const st=ST[r.status], sh=shortages(r), idx={unassigned:1,assigned:2,fulfilled:3}[r.status];
+  const nk=Object.keys(r.needs)[0]; const m=nk&&STOCK.find(s=>s.k===nk);
+  let h='<button type="button" class="scrim" data-act="closesheet" aria-label="Close request card"></button><div class="sheet" role="dialog" aria-label="Request '+r.id+'"><div class="handle"></div>';
+  h+='<div class="row"><span class="status '+st.cls+'"><i></i>'+st.pill+'</span><span class="grow"></span><span class="mono" style="color:var(--a-sub)">'+r.id+'</span><button type="button" class="ibtn" data-act="closesheet" aria-label="Close">'+ic('x')+'</button></div>';
+  h+='<h3 style="font-size:19px;margin:6px 0 0;line-height:1.25">'+esc(r.title)+'</h3>';
+  if(r.reports>1) h+='<div class="sub" style="margin-top:4px">'+ic('merge').replace('class="ic"','class="ic" style="width:15px;height:15px;vertical-align:-3px"')+' '+r.reports+' reports merged into this request</div>';
+  h+='<dl class="kv"><dt>Request type</dt><dd>'+ic(TYPES[r.type].icon)+TYPES[r.type].label+' · '+r.people+'</dd>';
+  h+='<dt>Coordinator</dt><dd>Lead: '+lead+'</dd>';
+  h+='<dt>Volunteer</dt><dd>'+(r.vol?esc(r.vol)+(r.note?' <span class="sub" style="font-weight:400">· '+esc(r.note)+'</span>':''):'<span class="sub" style="font-weight:400">Nobody yet</span>')+'</dd>';
+  h+='<dt>Last updated</dt><dd style="font-weight:400">'+ic('clock')+esc(r.updated)+'</dd>';
+  h+='<dt>Survivor</dt><dd>'+(S.privacy.on&&S.privacy.names?ic('tag'):'')+esc(who(r))+'</dd>';
+  h+='<dt>Location</dt><dd style="font-weight:400">'+esc(where(r))+'</dd>';
+  h+='<dt>Needs</dt><dd>'+(m?ic(m.icon)+r.needs[nk]+' '+m.unit:'Nothing from stock')+'</dd></dl>';
+  h+='<div class="steps" aria-label="Status: '+st.label+'"><div class="s1 '+(idx>=1?'on':'')+'">Unassigned</div><div class="s2 '+(idx>=2?'on':'')+'">Assigned</div><div class="s3 '+(idx>=3?'on':'')+'">Fulfilled</div></div>';
+  if(r.status==='unassigned'){
+    if(sh.length){ const s=sh[0]; h+='<div class="warn" role="alert">'+ic('box')+'<div><b>Not enough stock to accept.</b><br>Needs '+s.need+' '+s.unit+'. Truck 2 has '+s.have+'. Short by '+(s.need-s.have)+'.</div></div>';
+      h+='<button type="button" class="btn wide" disabled>'+ic('ban')+'Can’t assign: short on stock</button><div class="row" style="margin-top:8px"><button type="button" class="btn btn-o grow" data-act="go" data-to="inventory">'+ic('box')+'Update stock</button><button type="button" class="btn btn-o grow" data-act="go" data-to="mesh">'+ic('mesh')+'Ask team</button></div>';
+    } else {
+      if(m) h+='<div class="okline">'+ic('check')+'Truck 2 has '+S.stock[nk]+' '+m.unit+'. Enough for this request.</div>';
+      h+='<button type="button" class="btn btn-p wide" data-act="advance" data-id="'+r.id+'">'+ic('chev')+(S.role==='coordinator'?'Move to Assigned (Hnin, nearest)':'Accept: assign to me')+'</button>';
+      h+='<div class="row" style="margin-top:8px"><button type="button" class="btn btn-o grow" data-act="toast" data-msg="Route drawn on the offline map. 350 m, avoids zone H-1.">'+ic('nav')+'Navigate</button><button type="button" class="btn btn-o grow" data-act="go" data-to="mesh">'+ic('mesh')+'Message</button></div>';
+    }
+  } else if(r.status==='assigned'){
+    h+='<button type="button" class="btn btn-p wide" data-act="advance" data-id="'+r.id+'">'+ic('check')+'Mark as Fulfilled</button>';
+    h+='<div class="row" style="margin-top:8px"><button type="button" class="btn btn-o grow" data-act="toast" data-msg="Route drawn on the offline map. Avoids zone H-1.">'+ic('nav')+'Navigate</button><button type="button" class="btn btn-o grow" data-act="go" data-to="mesh">'+ic('mesh')+'Message</button></div>';
+  } else {
+    h+='<button type="button" class="btn wide" disabled>'+ic('check')+'Fulfilled</button><div style="text-align:center;margin-top:4px"><button type="button" class="btn btn-t" data-act="reopen" data-id="'+r.id+'">Reopen request</button></div>';
+  }
+  return h+'</div>';
+}
+
+V.requests = function(){
+  const tabs=[['all','All'],['unassigned','Urgent'],['assigned','Assigned'],['fulfilled','Done']];
+  const cnt=k=>k==='all'?S.requests.length:S.requests.filter(r=>r.status===k).length;
+  const order={unassigned:0,assigned:1,fulfilled:2};
+  const list=S.requests.filter(r=>S.reqTab==='all'||r.status===S.reqTab).sort((a,b)=>order[a.status]-order[b.status]);
+  let h='<div class="tabs" role="tablist">'+tabs.map(t=>'<button type="button" role="tab" data-act="reqtab" data-v="'+t[0]+'" aria-selected="'+(S.reqTab===t[0])+'">'+t[1]+'<span class="c">'+cnt(t[0])+'</span></button>').join('')+'</div>';
+  h+='<div class="scroll" style="top:47px"><div style="padding:0 16px 20px">';
+  if(S.role==='volunteer') h+='<div class="card" style="margin-top:12px;display:flex;gap:10px;align-items:center;background:var(--a-soft)">'+ic('truck')+'<div class="grow"><b>Your vehicle: Truck 2</b><div class="sub">Requests you can’t stock are marked</div></div></div>';
+  h+=list.map(r=>{ const st=ST[r.status], sh=r.status==='unassigned'&&shortages(r).length;
+    return '<button type="button" class="req" data-act="openreq" data-id="'+r.id+'"><span class="tile '+st.tile+'">'+ic(TYPES[r.type].icon)+'</span><span class="grow"><h3>'+esc(r.title)+'</h3><span class="sub">'+esc(S.privacy.on&&S.privacy.round?'Near '+r.zone:r.place)+' · '+r.dist+'</span><span class="meta"><span class="status '+st.cls+'"><i></i>'+st.label+'</span>'+(r.vol?'<span class="sub">'+esc(r.vol)+'</span>':'')+(sh?'<span class="status st-red" style="background:#fff;box-shadow:inset 0 0 0 1px #E4A79C">'+ic('box').replace('class="ic"','class="ic" style="width:14px;height:14px"')+'Short on stock</span>':'')+'</span><span class="sub" style="display:block;margin-top:4px;font-size:12px">'+r.id+' · '+esc(r.updated)+'</span></span></button>'; }).join('');
+  return h+'</div></div>';
+};
+
+V.report = function(){
+  const R=S.report, dup=R.type==='water' && !R.dupDismissed;
+  let h='<div class="scroll"><div class="sp">';
+  h+='<div class="field"><span class="lbl2" id="typeLbl">What is needed?</span><div class="typegrid" role="group" aria-labelledby="typeLbl">'+Object.keys(TYPES).map(k=>'<button type="button" data-act="rtype" data-v="'+k+'" aria-pressed="'+(R.type===k)+'">'+ic(TYPES[k].icon)+TYPES[k].label+'</button>').join('')+'</div></div>';
+  h+='<div class="field"><span class="lbl2">Location</span><div class="card row" style="padding:10px 12px;background:var(--a-soft)"><span class="tile" style="width:36px;height:36px">'+ic('target')+'</span><div class="grow"><b style="font-size:14px">Lane 4, Riverside Ward</b><div class="mono" style="color:var(--a-sub)">21.9741° N, 96.0836° E · ±15 m</div></div><button type="button" class="btn btn-t" data-act="toast" data-msg="Drag the pin on the map to adjust the location.">Adjust</button></div></div>';
+  if(dup){
+    h+='<div class="dup" role="alert"><h3>'+ic('merge')+'This may be a repeat report</h3><div class="match"><span class="tile" style="background:var(--a-redsoft);color:var(--a-red)">'+ic('drop')+'</span><div class="grow"><b style="font-size:14px">Clean drinking water needed for 20 households</b><div class="sub">REQ-0412 · 40 m away · reported 15 min ago</div><div class="sub" style="margin-top:6px;font-weight:700;color:var(--a-ambink)">92% match: same need, same street, similar numbers</div><div class="bar"><i style="width:92%"></i></div></div></div><div class="row"><button type="button" class="btn btn-p grow" style="height:44px" data-act="merge">Add to existing</button><button type="button" class="btn btn-o grow" style="height:44px" data-act="notdup">Not a repeat</button></div></div>';
+  }
+  h+='<div class="field"><label for="rPeople">How many people or households?</label><input class="input" id="rPeople" inputmode="numeric" value="'+esc(R.people)+'" data-bind="people"></div>';
+  h+='<div class="field"><label for="rText">What did you see?</label><textarea class="input" id="rText" data-bind="text">'+esc(R.text)+'</textarea></div>';
+  h+='<div class="row"><div class="grow"><b>Urgent</b><div class="sub">Shows as a red pin for everyone</div></div><button type="button" class="toggle" role="switch" aria-checked="'+R.urgent+'" aria-label="Urgent" data-act="rurgent"></button></div>';
+  h+='<button type="button" class="btn btn-o" data-act="toast" data-msg="Camera opens. Faces are blurred automatically while privacy mode is on.">'+ic('camera')+'Add photo (optional)</button>';
+  h+='<button type="button" class="btn btn-p wide" data-act="submitreport">'+ic('send')+'Save and share on mesh</button>';
+  h+='<div class="sub" style="text-align:center">Saved on this phone first. Sent to nearby phones over mesh.</div>';
+  return h+'</div></div>';
+};
+
+V.inventory = function(){
+  let h='<div class="tabs" role="tablist"><button type="button" role="tab" data-act="invtab" data-v="truck" aria-selected="'+(S.invTab==='truck')+'">Truck 2 (my team)</button><button type="button" role="tab" data-act="invtab" data-v="hubs" aria-selected="'+(S.invTab==='hubs')+'">Supply sites</button></div><div class="scroll" style="top:47px"><div class="sp">';
+  if(S.invTab==='truck'){
+    const open=S.requests.filter(r=>r.status==='unassigned'); const ok=open.filter(r=>!shortages(r).length).length;
+    h+='<div class="hero"><div class="lbl" style="color:#CDEBD9">Truck 2 · Team Riverside</div><div class="big">Ready for '+ok+' of '+open.length+' open requests</div><div class="sub">Counts are checked before anyone accepts a request.</div></div>';
+    h+='<div>'+STOCK.map(s=>{ const need=openReqNeeds(s.k), have=S.stock[s.k], short=need>have;
+      return '<div class="stock"><span class="tile">'+ic(s.icon)+'</span><div class="grow"><b style="font-size:15px">'+s.name+'</b><div class="sub">'+s.unit+'</div>'+(need?'<div class="need '+(short?'short':'ok')+'">'+(short?'Short by '+(need-have)+' for open requests':'Covers open requests ('+need+')')+'</div>':'')+'</div><div class="stepper"><button type="button" data-act="stock" data-k="'+s.k+'" data-d="-1" aria-label="Remove one '+s.name+'">'+ic('minus')+'</button><output aria-live="polite">'+have+'</output><button type="button" data-act="stock" data-k="'+s.k+'" data-d="1" aria-label="Add one '+s.name+'">'+ic('plus')+'</button></div></div>'; }).join('')+'</div>';
+    h+='<div class="row"><button type="button" class="btn btn-o grow" data-act="toast" data-msg="New item added: give it a name and unit.">'+ic('plus')+'Add item</button><button type="button" class="btn btn-p grow" data-act="toast" data-msg="Stock count saved and shared with the team.">'+ic('check')+'Save count</button></div>';
+    h+='<div class="sub">Last full count 07:30 by Hnin. Changes sync over mesh.</div>';
+  } else {
+    h+='<div class="sub">Supplies other teams have recorded. Request a transfer to fill a gap.</div>';
+    h+=HUBS.map(hb=>'<div class="card"><div class="row"><span class="tile">'+ic('home')+'</span><div class="grow"><b>'+hb.name+'</b><div class="sub">'+hb.when+'</div></div></div><dl class="kv" style="margin:10px 0">'+hb.items.map(i=>'<dt>'+i[0]+'</dt><dd>'+i[1]+'</dd>').join('')+'</dl><button type="button" class="btn btn-o wide" style="height:42px" data-act="toast" data-msg="Transfer request sent to '+hb.name.split(' (')[0]+' over mesh.">'+ic('truck')+'Request transfer</button></div>').join('');
+  }
+  return h+'</div></div>';
+};
+
+V.team = function(){
+  if(S.role==='volunteer'){
+    let h='<div class="map" style="height:250px;bottom:auto">'+mapSVG({})+'<svg class="mapsvg" viewBox="0 0 380 650" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><polyline points="96,520 120,470 152,420 152,360 150,300" fill="none" stroke="#17804D" stroke-width="3" stroke-dasharray="1 6" stroke-linecap="round"/></svg><span class="me" style="left:150px;top:150px"></span><span class="melbl" style="left:150px;top:150px">You</span></div>';
+    h+='<div class="scroll" style="top:250px"><div class="sp">';
+    h+='<div class="row"><div class="grow"><b style="font-size:17px">Share my location</b><div class="sub">With your coordinator, Su Su, only</div></div><button type="button" class="toggle" role="switch" aria-checked="'+S.sharing+'" aria-label="Share my location" data-act="share"></button></div>';
+    h+='<div class="field"><span class="lbl2" id="evLbl">Send my position every</span><div class="chips" role="group" aria-labelledby="evLbl">'+['1 min','2 min','5 min','10 min'].map(v=>'<button type="button" class="chip" data-act="every" data-v="'+v+'" aria-pressed="'+(S.every===v)+'">'+v+'</button>').join('')+'</div><div class="sub">Longer gaps save battery. SOS always sends right away.</div></div>';
+    h+='<div class="card" style="background:var(--a-soft);display:flex;flex-direction:column;gap:8px;font-size:14px"><div class="row">'+ic('mesh')+'<span class="grow">'+(S.sharing?'Last sent 14:31 via mesh, 1 hop':'Sharing is off')+'</span></div><div class="row">'+ic('lock')+'<span class="grow">Last 24 hours of positions kept on this phone, encrypted</span></div><div class="row">'+ic('sync')+'<span class="grow">If nobody is in range, positions wait and send later</span></div></div>';
+    return h+'</div></div>';
+  }
+  let h='<div class="map">'+mapSVG({trails:true,zones:true});
+  h+=S.team.map(t=>'<div class="vol'+(t.live?'':' stale')+'" style="left:'+t.x+'px;top:'+t.y+'px"><div class="av">'+t.n.split(' ').map(w=>w[0]).join('')+'</div><span>'+t.n+'</span></div>').join('');
+  h+='<div class="mtop"><div class="offl">'+ic('users')+'<span><b>4 volunteers</b> · 3 live, 1 last known</span></div></div></div>';
+  h+='<div class="sheet" style="max-height:none;height:316px;animation:none"><div class="handle"></div><div class="row" style="margin-bottom:4px"><b class="grow" style="font-size:17px">Team Riverside</b><button type="button" class="btn btn-t" style="height:36px" data-act="toast" data-msg="Location request sent to everyone in mesh range.">'+ic('sync')+'Ping all</button></div>';
+  h+=S.team.map(t=>'<div class="row" style="padding:9px 0;border-bottom:1px solid var(--a-line)"><span class="avl'+(t.live?'':' stale')+'">'+t.n.split(' ').map(w=>w[0]).join('')+'</span><div class="grow"><b>'+t.n+'</b><div class="sub">'+t.line+'</div><div class="sub" style="font-size:12px;color:'+(t.live?'var(--a-gd)':'#7A5600')+';font-weight:700">'+t.via+'</div></div><span class="batt'+(t.bat<20?' low':'')+'">'+t.bat+'%</span></div>').join('');
+  return h+'</div>';
+};
+
+V.mesh = function(){
+  const peers=[['Aung',112,58,'2 hops'],['Thandar',268,62,'1 hop'],['Hnin',76,128,'1 hop'],['Relay: monastery roof',286,140,'relay'],['Ko Min',336,28,'3 hops']];
+  let rad='<svg viewBox="0 0 380 178" aria-hidden="true"><g fill="none" stroke="#B9D5C2" stroke-width="1.2"><circle cx="190" cy="100" r="34"/><circle cx="190" cy="100" r="70"/><circle cx="190" cy="100" r="110"/><circle cx="190" cy="100" r="150"/></g><g stroke="#17804D" stroke-width="1.6" stroke-dasharray="3 4">'+peers.filter(p=>p[3]!=='3 hops').map(p=>'<line x1="190" y1="100" x2="'+p[1]+'" y2="'+p[2]+'"/>').join('')+'<line x1="268" y1="62" x2="336" y2="28"/></g>';
+  rad+=peers.map(p=>'<g transform="translate('+p[1]+','+p[2]+')"><circle r="8" fill="'+(p[3]==='relay'?'#fff':'#17804D')+'" stroke="#17804D" stroke-width="2.5"/><text y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#11281B" font-family="Atkinson Hyperlegible, sans-serif">'+p[0]+'</text></g>').join('');
+  rad+='<circle cx="190" cy="100" r="12" fill="#0E5A35" stroke="#fff" stroke-width="3"/><text x="190" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="#0E5A35" font-family="Atkinson Hyperlegible, sans-serif">You</text></svg>';
+  rad+='<div style="position:absolute;left:12px;top:10px;font-size:12px;font-weight:700;color:var(--a-gd);background:#fff;border-radius:8px;padding:3px 8px">4 phones · 1 relay · no towers</div>';
+  let h='<div class="meshwrap"><div class="radar">'+rad+'</div><div class="row" style="padding:8px 14px;border-bottom:1px solid var(--a-line)"><b class="grow">Team channel</b><span class="sub">Reaches 7 of 9 phones</span></div><div class="msgs" id="msgs">';
+  h+=S.msgs.map(m=>{ const mine=m.from===me(); const st=m.status;
+    return '<div class="msg'+(mine?' mine':'')+(m.pri?' pri':'')+'">'+(mine?'':'<span class="who">'+esc(m.from)+(m.pri?' · Priority':'')+'</span>')+'<div class="b">'+esc(m.text)+'</div><span class="m">'+m.t+' · '+(st==='queued'?ic('clock')+'Waiting for a nearby phone':st==='relay'?ic('mesh')+'Passed on, 1 hop':'via '+m.via+(mine?' · '+ic('check')+'Delivered to 4':''))+'</span></div>'; }).join('');
+  h+='</div><form class="compose" data-form="mesh"><label for="meshIn" style="position:absolute;left:-9999px">Message the team</label><input id="meshIn" placeholder="Message the team" autocomplete="off"><button type="submit" class="send" aria-label="Send">'+ic('send')+'</button></form></div>';
+  return h;
+};
+
+V.sos = function(){
+  if(S.sos==='active'){
+    let h='<div class="sosact"><div class="beacon"><i></i><i></i><i></i><b>SOS</b></div><h3 style="margin:0;font-size:26px">SOS is on</h3><p style="margin:0;font-size:15px;opacity:.95">Stay where you are if it is safe. Help has your location.</p>';
+    h+='<div class="soslist"><div>'+ic('pin')+'<span class="grow">Location shared · 21.9741° N, 96.0836° E</span></div><div>'+ic('mesh')+'<span class="grow">Sent over mesh to 4 nearby phones</span></div><div>'+ic('user')+'<span class="grow">'+(S.role==='coordinator'?'Team Riverside alerted (all volunteers)':'Su Su (coordinator): '+(S.sosAck?'<b>received 14:33</b>':'sending…'))+'</span></div><div>'+ic(S.sosSilent?'mute':'sound')+'<span class="grow">'+(S.sosSilent?'Silent: no alarm sound':'Alarm sounding on this phone')+'</span></div></div>';
+    if(S.sosConfirm) h+='<div style="width:100%;background:#fff;color:var(--a-ink);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px"><b style="font-size:17px">Are you safe now?</b><div class="row"><button type="button" class="btn btn-p grow" data-act="soscancel">Yes, stop SOS</button><button type="button" class="btn btn-o grow" data-act="soskeep">Keep SOS on</button></div></div>';
+    else h+='<div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:8px"><button type="button" class="btn btn-w wide" data-act="sosask">'+ic('check')+'I’m safe, stop SOS</button><button type="button" class="btn btn-wo wide" data-act="go" data-to="firstaid">'+ic('firstaid')+'Open first aid</button></div>';
+    return h+'</div>';
+  }
+  let h='<div class="sosw"><p style="margin:0;font-size:16px;color:var(--a-sub)">Press and hold for 3 seconds</p><div class="sosring"><svg viewBox="0 0 230 230" aria-hidden="true"><circle cx="115" cy="115" r="108" fill="none" stroke="#F6D3CD" stroke-width="10"/><circle id="sosProg" cx="115" cy="115" r="108" fill="none" stroke="#C62F1E" stroke-width="10" stroke-linecap="round" stroke-dasharray="678.6" stroke-dashoffset="678.6"/></svg><button type="button" class="bigsos" id="sosBtn" aria-label="Hold for 3 seconds to send SOS">SOS<small id="sosHint">Hold to send</small></button></div>';
+  h+='<div class="sosopts"><div class="card row" style="padding:10px 12px"><span class="tile" style="background:var(--a-soft)">'+ic('mute')+'</span><div class="grow"><b>Silent SOS</b><div class="sub">No alarm sound, for when noise is unsafe</div></div><button type="button" class="toggle" role="switch" aria-checked="'+S.sosSilent+'" aria-label="Silent SOS" data-act="sossilent"></button></div>';
+  h+='<div class="card" style="padding:10px 12px;font-size:14px;display:flex;flex-direction:column;gap:6px;background:var(--a-soft)"><b>What happens</b><div class="row">'+ic('pin')+'Your location goes to '+(S.role==='coordinator'?'every volunteer':'Su Su')+' and phones nearby</div><div class="row">'+ic('mesh')+'Works with no signal, over mesh</div><div class="row">'+ic('vibe')+'Their phones ring and vibrate</div></div>';
+  h+='<div class="callbar">'+ic('phone')+'<span class="grow">Have signal? Ambulance <b class="mono" style="font-size:14px">192</b> · Police <b class="mono" style="font-size:14px">199</b></span></div></div></div>';
+  return h;
+};
+
+V.firstaid = function(){
+  let h='<div class="scroll"><div class="sp"><div class="field" style="gap:4px"><label for="faSearch" style="position:absolute;left:-9999px">Search emergencies</label><div style="position:relative"><span style="position:absolute;left:12px;top:13px;color:var(--a-sub)">'+ic('search')+'</span><input class="input" id="faSearch" placeholder="Search: bleeding, burn, snake…" value="'+esc(S.faq)+'" style="padding-left:42px" data-bind="faq"></div></div>';
+  h+='<div class="row sub" style="gap:8px">'+ic('shield')+'<span>All 20 guides work with no internet. Simple words, big pictures.</span></div>';
+  h+='<div class="fagrid" id="fagrid">'+faGrid()+'</div>';
+  h+='<div class="sub" style="font-size:12px">Medical content reviewed by [MEDICAL REVIEWER], [DATE]. Not a replacement for trained care.</div></div></div>';
+  return h;
+};
+function faGrid(){ const q=S.faq.trim().toLowerCase(); const l=FA.filter(f=>!q||(f.n+' '+f.t).toLowerCase().includes(q));
+  return l.length? l.map(f=>'<button type="button" class="fa'+(f.top?' crit':'')+'" data-act="guide" data-k="'+f.k+'"><span class="tile">'+ic(f.ic)+'</span><b>'+f.n+'</b><span>'+f.t+'</span></button>').join('') : '<div class="sub" style="grid-column:1/-1">No guide matches "'+esc(S.faq)+'". Try a simpler word, like "blood".</div>'; }
+
+V.guide = function(){
+  const f=FA.find(x=>x.k===S.fa);
+  let h='<div class="scroll"><div class="sp"><div class="row"><span class="tile" style="width:56px;height:56px;border-radius:16px;background:var(--a-red);color:#fff">'+ic(f.ic).replace('class="ic"','class="ic" style="width:30px;height:30px"')+'</span><div class="grow"><h3 style="margin:0;font-size:24px">'+f.n+'</h3><div class="sub">'+f.t+' · 4 steps</div></div></div>';
+  h+='<button type="button" class="callbar" style="border:0;text-align:left;cursor:pointer;width:100%" data-act="call">'+ic('phone')+'<span class="grow"><b>Call ambulance: <span class="mono" style="font-size:15px">192</span></b><br><span class="sub">No signal? Press SOS instead.</span></span>'+ic('chev')+'</button>';
+  h+=f.s.map((s,i)=>'<div class="step'+(['ban','x'].includes(s[0])?' dont':'')+'"><span class="num"><em>'+(i+1)+'</em>'+ic(s[0])+'</span><p>'+esc(s[1])+'</p></div>').join('');
+  if(f.k==='cpr') h+='<div class="metro"><button type="button" class="beat'+(S.beat?' go':'')+'" data-act="beat" aria-label="'+(S.beat?'Stop':'Start')+' the compression beat" style="border:0;cursor:pointer">'+ic('heart')+'</button><div class="grow"><b>Push to the beat</b><div class="sub">'+(S.beat?'110 pushes a minute. Tap to stop.':'Tap the heart for a 110-a-minute beat with a click sound.')+'</div></div></div>';
+  h+='<button type="button" class="btn btn-o wide" data-act="go" data-to="firstaid">'+ic('list')+'All 20 emergencies</button>';
+  return h+'</div></div>';
+};
+
+V.hazards = function(){
+  const coord=S.role==='coordinator';
+  let h='<div class="map" data-act="maptap" id="hzmap">'+mapSVG({zones:true});
+  if(!coord){ const p=S.walked?{x:138,y:428}:{x:150,y:300}; h+='<span class="me" id="meDot" style="left:'+p.x+'px;top:'+p.y+'px"></span><span class="melbl" id="meLbl" style="left:'+p.x+'px;top:'+p.y+'px">You</span>'; }
+  h+='<div class="mtop">';
+  if(S.markMode){ h+='<div class="hz-banner"><b style="display:block;margin-bottom:8px">Tap the map to place a zone</b><div class="chips">'+['Flooding','Unstable structure','Landslide','Fire','Unsafe area'].map(t=>'<button type="button" class="chip" data-act="marktype" data-v="'+t+'" aria-pressed="'+(S.markType===t)+'">'+t+'</button>').join('')+'</div></div>'; }
+  else h+='<div class="offl">'+ic('vibe')+'<span><b>Alerts on</b> · phone vibrates within 100 m of a zone</span></div>';
+  h+='</div></div>';
+  h+='<div class="sheet" style="max-height:none;height:'+(S.markMode?150:286)+'px;animation:none"><div class="handle"></div><div class="row" style="margin-bottom:2px"><b class="grow" style="font-size:17px">Danger zones ('+S.zones.length+')</b>';
+  if(coord) h+=S.markMode?'<button type="button" class="btn btn-o" style="height:40px" data-act="markoff">Done</button>':'<button type="button" class="btn btn-p" style="height:40px" data-act="markon">'+ic('plus')+'Mark zone</button>';
+  else h+='<button type="button" class="btn btn-o" style="height:40px" data-act="walk"'+(S.walked?' disabled':'')+'>'+ic('nav')+'Simulate walk</button>';
+  h+='</div>';
+  if(!S.markMode) h+=S.zones.map(z=>'<div class="zitem"><span class="tile'+(z.lvl==='red'?'':' o')+'">'+ic(z.type==='Flooding'?'wave':z.type==='Landslide'?'alert':z.type==='Fire'?'flame':'ban')+'</span><div class="grow"><b>'+esc(z.name)+'</b><div class="sub"><span class="mono">'+z.id+'</span> · '+z.type+' · '+esc(z.since)+'</div></div></div>').join('');
+  h+='</div>';
+  if(S.hazAlert){ const z=S.zones.find(x=>x.id==='H-2');
+    h+='<div class="alertov" role="alertdialog" aria-label="Danger zone warning"><div class="alertbox"><span class="tile">'+ic('alert')+'</span><span class="dist">60 m ahead · zone H-2</span><h3>Danger zone: '+esc(z.name)+'</h3><p style="margin:0;color:var(--a-sub)">Do not cross. Use Bridge 3 on Market Rd instead. Marked by Su Su at 14:05.</p><div class="vibe">'+ic('vibe')+'Phone vibrated: 3 short pulses</div><button type="button" class="btn btn-p wide" data-act="hazok">I understand, reroute me</button><button type="button" class="btn btn-t" data-act="hazclose">Dismiss</button></div></div>'; }
+  return h;
+};
+
+V.privacy = function(){
+  const P=S.privacy, r=S.requests[0];
+  let h='<div class="scroll"><div class="sp"><div class="card row" style="'+(P.on?'border:2px solid var(--a-g);background:var(--a-soft)':'')+'"><span class="tile" style="'+(P.on?'background:var(--a-g);color:#fff':'')+'">'+ic('eyeoff')+'</span><div class="grow"><b style="font-size:17px">Privacy mode</b><div class="sub">'+(P.on?'On for the whole team':'Off. Exact names and addresses visible')+'</div></div><button type="button" class="toggle" role="switch" aria-checked="'+P.on+'" aria-label="Privacy mode" data-act="priv" data-k="on"></button></div>';
+  h+='<div><div class="lbl" style="margin-bottom:6px">What volunteers see</div><div class="cmp"><div class="card'+(P.on?'':' on')+'"><b style="font-size:12px;color:var(--a-sub)">OFF</b><b>Daw Khin Myint</b><span>No. 18, Lane 4, Riverside Ward</span><div class="mini"><svg viewBox="0 0 160 76" aria-hidden="true"><path d="M0 38H160M70 0V76" stroke="#fff" stroke-width="6"/><circle cx="56" cy="30" r="6" fill="#C62F1E" stroke="#fff" stroke-width="2"/></svg></div></div>';
+  h+='<div class="card'+(P.on?' on':'')+'"><b style="font-size:12px;color:var(--a-gd)">ON</b><b class="row" style="gap:4px">'+ic('tag').replace('class="ic"','class="ic" style="width:15px;height:15px"')+'Survivor K7-42</b><span>Within 100 m of Lane 4 &amp; Market Rd</span><div class="mini"><svg viewBox="0 0 160 76" aria-hidden="true"><path d="M0 38H160M70 0V76" stroke="#fff" stroke-width="6"/><circle cx="64" cy="36" r="30" fill="rgba(23,128,77,.18)" stroke="#17804D" stroke-width="2" stroke-dasharray="4 3"/></svg></div></div></div></div>';
+  const opts=[['names','Hide survivor names','Show a random tag like K7-42 instead'],['round','Blur locations to 100 m','House numbers hidden, area shown as a circle'],['ids','Random ID tags','New tags each operation, so records can’t be linked'],['faces','Blur faces in photos','Done on the phone before sharing']];
+  h+='<div class="card" style="padding:4px 14px'+(P.on?'':';opacity:.6')+'">'+opts.map(o=>'<div class="opt"><div class="grow"><b>'+o[1]+'</b><span class="sub">'+o[2]+'</span></div><button type="button" class="toggle" role="switch" aria-checked="'+P[o[0]]+'" aria-label="'+o[1]+'" data-act="priv" data-k="'+o[0]+'"'+(P.on?'':' disabled')+'></button></div>').join('');
+  h+='<div class="opt"><div class="grow"><label for="keepSel"><b>Delete resolved requests after</b></label><span class="sub">From every phone on the team</span></div><select class="select" id="keepSel" data-bind="keep">'+['7 days','30 days','90 days'].map(v=>'<option'+(P.keep===v?' selected':'')+'>'+v+'</option>').join('')+'</select></div></div>';
+  h+='<div class="row sub">'+ic('lock')+'<span>Exact details stay with the coordinator, encrypted on their phone.</span></div>';
+  return h+'</div></div>';
+};
+
+const BOT = {
+  start:{a:'Hi '+'{me}'+'. I work on this phone with no internet. What do you need?',c:['How do I change a request status?','Emergency numbers','How does mesh work?','Report a danger zone']},
+  'How do I change a request status?':{a:'Open the map and tap a pin. At the bottom of the card, tap the green button. Each tap moves it one step: Unassigned, then Assigned, then Fulfilled.',c:['What if stock is low?','Who can change status?']},
+  'Emergency numbers':{a:'Ambulance <span class="num-pill">192</span> · Police <span class="num-pill">199</span> · Fire <span class="num-pill">191</span>. These need a phone signal. No signal? Hold the SOS button: it alerts phones nearby over mesh.',c:['How does SOS work?','Open first aid']},
+  'How does mesh work?':{a:'Your phone talks to phones nearby by Bluetooth and Wi-Fi Direct, about 100 m each. Messages hop from phone to phone until they reach your team. No towers, no internet.',c:['Why is my message waiting?','How far can it reach?']},
+  'Report a danger zone':{a:'Coordinators mark zones on the Danger zones screen. Volunteers: send it to Su Su on the mesh team channel. Everyone’s phone vibrates near a marked zone.',c:['Open danger zones','How does mesh work?']},
+  'What if stock is low?':{a:'You can’t accept a request if Truck 2 doesn’t have enough. The card tells you what is short. Fix the count on the Stock screen, or ask a supply site for a transfer.',c:['Open stock','Who can change status?']},
+  'Who can change status?':{a:'Coordinators can change any request. Volunteers can accept open requests and close the ones assigned to them.',c:['How do I change a request status?']},
+  'How does SOS work?':{a:'Hold the red SOS button for 3 seconds. Your location goes to your coordinator and phones nearby. Turn on Silent SOS if noise could put you in danger.',c:['Open SOS','Emergency numbers']},
+  'Why is my message waiting?':{a:'Nobody from your team is in range right now. The message is saved and sends by itself when a phone comes near. Walking to higher ground helps.',c:['How far can it reach?']},
+  'How far can it reach?':{a:'About 100 m phone to phone, more in open space. With relays like the monastery roof phone, your team channel reaches 7 of 9 phones right now.',c:['How does mesh work?']}
+};
+const BOTLINK = {'Open first aid':'firstaid','Open danger zones':'hazards','Open stock':'inventory','Open SOS':'sos'};
+function botAsk(q){
+  if(BOTLINK[q]){ go(BOTLINK[q]); return; }
+  S.chat.push({me:true,text:q}); S.chatBusy=true; render();
+  let key=BOT[q]?q:null; const l=q.toLowerCase();
+  if(!key){ if(/stat|assign|fulfil/.test(l)) key='How do I change a request status?'; else if(/number|call|ambul|police|fire/.test(l)) key='Emergency numbers'; else if(/mesh|message|signal|internet/.test(l)) key='How does mesh work?'; else if(/sos|danger|help me|attack/.test(l)) key='How does SOS work?'; else if(/stock|supply|water|food/.test(l)) key='What if stock is low?'; else if(/zone|flood|bridge/.test(l)) key='Report a danger zone'; }
+  setTimeout(()=>{ S.chatBusy=false; S.chat.push(key?{a:BOT[key].a,c:BOT[key].c}:{a:'I’m not sure about that one. I can help with these:',c:BOT.start.c}); render(); }, 700);
+}
+V.assistant = function(){
+  let h='<div class="meshwrap"><div class="row" style="padding:10px 14px;border-bottom:1px solid var(--a-line);background:var(--a-soft)"><span class="tile" style="width:36px;height:36px">'+ic('bot')+'</span><div class="grow"><b>Helper</b><div class="sub" style="font-size:12px">Runs on this phone · works offline · short answers</div></div></div><div class="msgs" id="chatlog">';
+  const all=[{a:BOT.start.a.replace('{me}',me()),c:BOT.start.c}].concat(S.chat);
+  all.forEach((m,i)=>{ if(m.me) h+='<div class="msg mine"><div class="b">'+esc(m.text)+'</div></div>';
+    else { h+='<div class="msg bot"><span class="who">Helper</span><div class="b">'+m.a+'</div>'; if(i===all.length-1&&!S.chatBusy) h+='<div class="qchips">'+m.c.map(c=>'<button type="button" data-act="ask" data-q="'+esc(c)+'">'+esc(c)+'</button>').join('')+'</div>'; h+='</div>'; } });
+  if(S.chatBusy) h+='<div class="msg bot"><div class="b typing" aria-label="Helper is typing"><span></span><span></span><span></span></div></div>';
+  h+='</div><form class="compose" data-form="chat"><label for="chatIn" style="position:absolute;left:-9999px">Ask a question</label><input id="chatIn" placeholder="Ask a question" autocomplete="off"><button type="submit" class="send" aria-label="Ask">'+ic('send')+'</button></form></div>';
+  return h;
+};
+
+/* ---------- chrome ---------- */
+const TITLES={map:'Relief map',requests:'Requests',report:'New report',inventory:'Stock & supplies',team:'Team tracking',mesh:'Mesh messages',sos:'SOS alarm',firstaid:'First aid',guide:'First aid',hazards:'Danger zones',privacy:'Privacy mode',assistant:'Ask Helper'};
+function statusBar(){ const red=S.screen==='sos'&&S.sos==='active'; return '<div class="sb'+(red?' sb-sos':'')+'"><span>14:32</span><span class="cam"></span><span class="r">'+ic('bt')+ic('nosig')+'<span>64%</span>'+ic('battery')+'</span></div>'; }
+function appBar(){
+  if(S.screen==='sos'&&S.sos==='active') return '';
+  const back = S.screen==='guide'||S.screen==='report';
+  const t = S.screen==='team'&&S.role==='volunteer'?'My location':TITLES[S.screen];
+  return '<div class="ab">'+(back?'<button type="button" class="ibtn" data-act="go" data-to="'+(S.screen==='guide'?'firstaid':'map')+'" aria-label="Back">'+ic('back')+'</button>':'<button type="button" class="ibtn" data-act="drawer" aria-label="Open menu">'+ic('menu')+'</button>')+'<h2>'+t+'</h2>'+(S.screen==='sos'?'':'<span class="mesh-chip" title="Phones in mesh range">'+ic('mesh')+'4</span><button type="button" class="sos-btn" data-act="go" data-to="sos" aria-label="SOS">'+ic('radio')+'SOS</button>')+'</div>';
+}
+function navBar(){
+  if(S.screen==='sos'&&S.sos==='active') return '';
+  const items=[['map','Map','map'],['requests','Requests','list'],['mesh','Mesh','mesh'],['firstaid','First aid','firstaid'],['assistant','Helper','bot']];
+  const cur = S.screen==='guide'?'firstaid':S.screen;
+  const n=S.requests.filter(r=>r.status==='unassigned').length;
+  return '<nav class="nav" aria-label="Main">'+items.map(i=>'<button type="button" data-act="go" data-to="'+i[0]+'"'+(cur===i[0]?' aria-current="page"':'')+'><span class="pillw">'+ic(i[2])+'</span>'+i[1]+(i[0]==='requests'&&n?'<span class="badge">'+n+'</span>':'')+'</button>').join('')+'</nav>';
+}
+function drawerHTML(){
+  if(!S.drawer) return '';
+  const coord=S.role==='coordinator', cur=S.screen==='guide'?'firstaid':S.screen;
+  const it=(to,label,icn,ct)=>'<button type="button" class="ditem" data-act="go" data-to="'+to+'"'+(cur===to?' aria-current="page"':'')+'>'+ic(icn)+label+(ct?'<span class="ct">'+ct+'</span>':'')+'</button>';
+  let h='<button type="button" class="scrim" style="z-index:29" data-act="drawer" aria-label="Close menu"></button><div class="drawer" role="dialog" aria-label="Menu"><div class="dhead"><div class="row"><span class="avl">'+(coord?'SS':'A')+'</span><div class="grow"><b style="font-size:17px">'+me()+'</b><div style="font-size:13px;color:#CDEBD9">'+(coord?'Coordinator':'Volunteer')+' · Team Riverside</div></div></div><div class="seg2" role="group" aria-label="Role"><button type="button" data-act="role" data-v="coordinator" aria-pressed="'+coord+'">Coordinator</button><button type="button" data-act="role" data-v="volunteer" aria-pressed="'+!coord+'">Volunteer</button></div></div><div class="dlist">';
+  h+='<div class="dsec">Operations</div>'+it('map','Relief map','map')+it('requests','Requests','list',S.requests.filter(r=>r.status==='unassigned').length+' open')+it('report','New report','plus')+it('inventory','Stock & supplies','box');
+  h+='<div class="dsec">Safety</div>'+it('team',coord?'Team tracking':'My location',coord?'users':'pin')+it('hazards','Danger zones','alert',S.zones.length)+it('mesh','Mesh messages','mesh')+it('sos','SOS alarm','radio')+it('firstaid','First aid','firstaid','20')+it('assistant','Ask Helper','bot');
+  h+='<div class="dsec">Data</div>'+it('privacy','Privacy mode','eyeoff',S.privacy.on?'On':'Off');
+  h+='<div class="dsec">Coming later</div><div class="ditem soon">'+ic('bell')+'Automatic reminders<span class="soonchip">Soon</span></div><div class="ditem soon">'+ic('chart')+'Reports &amp; analytics<span class="soonchip">Soon</span></div><div class="ditem soon">'+ic('link')+'Partner organisations<span class="soonchip">Soon</span></div>';
+  h+='</div><div class="dfoot"><span><b>Offline.</b> 37 changes saved on this phone</span><span>Last internet sync 12:31 · Mesh: 4 phones</span></div></div>';
+  return h;
+}
+
+/* ---------- render ---------- */
+const screenEl=document.getElementById('screen');
+function viewId(){ if(S.drawer) return 'drawer'; if(S.screen==='map'&&S.sel) return 'card'; if(S.screen==='sos'&&S.sos==='active') return 'sosactive'; if(S.screen==='hazards'&&S.hazAlert) return 'hazalert'; return S.screen; }
+function render(){
+  const sc=screenEl.querySelector('.scroll'), keep=sc&&screenEl.dataset.s===S.screen?sc.scrollTop:0;
+  screenEl.innerHTML = statusBar()+appBar()+'<main class="content">'+V[S.screen]()+drawerHTML()+(S.toast?'<div class="toast" role="status">'+ic('check')+'<span>'+esc(S.toast)+'</span></div>':'')+'</main>'+navBar()+'<div class="gest"><i></i></div>';
+  screenEl.dataset.s=S.screen;
+  const sc2=screenEl.querySelector('.scroll'); if(sc2) sc2.scrollTop=keep;
+  ['msgs','chatlog'].forEach(id=>{ const m=document.getElementById(id); if(m) m.scrollTop=m.scrollHeight; });
+  if(S.screen==='sos'&&S.sos!=='active') wireSOS();
+  renderIndex(); renderNotes();
+  document.getElementById('roleCoord').setAttribute('aria-pressed', S.role==='coordinator');
+  document.getElementById('roleVol').setAttribute('aria-pressed', S.role==='volunteer');
+}
+function go(to){ S.screen=to; S.drawer=false; S.sel=null; S.hazAlert=false; S.markMode=false; if(to!=='guide') stopBeat(); render(); }
+
+/* SOS hold */
+function wireSOS(){
+  const b=document.getElementById('sosBtn'), p=document.getElementById('sosProg'), hint=document.getElementById('sosHint'); let t0=0, raf=0;
+  const C=678.6;
+  function tick(){ const k=Math.min(1,(performance.now()-t0)/3000); p.style.strokeDashoffset=C*(1-k); hint.textContent=k<1?'Keep holding… '+Math.ceil(3-k*3):'Sending'; if(k>=1){ fire(); return; } raf=requestAnimationFrame(tick); }
+  function start(e){ if(t0) return; if(e) e.preventDefault(); t0=performance.now(); raf=requestAnimationFrame(tick); }
+  function stop(){ if(!t0) return; cancelAnimationFrame(raf); t0=0; p.style.strokeDashoffset=C; hint.textContent='Hold to send'; }
+  function fire(){ t0=0; S.sos='active'; S.sosAck=false; render(); screenEl.classList.add('buzz'); setTimeout(()=>screenEl.classList.remove('buzz'),1000); setTimeout(()=>{ if(S.sos==='active'){ S.sosAck=true; render(); } },1800); }
+  b.addEventListener('pointerdown',start); b.addEventListener('contextmenu',e=>e.preventDefault()); ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,stop));
+  b.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter')&&!e.repeat) start(e); });
+  b.addEventListener('keyup',e=>{ if(e.key===' '||e.key==='Enter') stop(); });
+}
+
+/* CPR beat */
+let actx=null, beatT=null;
+function stopBeat(){ S.beat=false; clearInterval(beatT); beatT=null; }
+function startBeat(){ S.beat=true; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ actx=null; }
+  beatT=setInterval(()=>{ if(!actx) return; try{ const o=actx.createOscillator(), g=actx.createGain(); o.frequency.value=880; g.gain.setValueAtTime(.12,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.06); o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime+.07);}catch(e){} }, 545); }
+
+/* events */
+screenEl.addEventListener('click', e=>{
+  const t=e.target.closest('[data-act]'); if(!t||t.disabled) return; const a=t.dataset.act, d=t.dataset;
+  if(a==='go') return go(d.to);
+  if(a==='drawer'){ S.drawer=!S.drawer; return render(); }
+  if(a==='role'){ S.role=d.v; return render(); }
+  if(a==='pin'){ e.stopPropagation(); S.sel=d.id; return render(); }
+  if(a==='closesheet'){ S.sel=null; return render(); }
+  if(a==='filter'){ S.filter=d.v; return render(); }
+  if(a==='zones'){ S.zonesOn=!S.zonesOn; return render(); }
+  if(a==='toast'){ toast(d.msg); return render(); }
+  if(a==='advance'){ const r=S.requests.find(x=>x.id===d.id);
+    if(r.status==='unassigned'){ if(shortages(r).length) return; r.status='assigned'; r.vol=S.role==='coordinator'?'Hnin':'Aung'; r.note=S.role==='coordinator'?'Assigned by Su Su':'En route'; r.updated='Just now on this phone · sharing over mesh'; toast(r.id+' assigned to '+r.vol+'. Saved on this phone.'); }
+    else if(r.status==='assigned'){ r.status='fulfilled'; r.note='Delivered'; for(const k in r.needs) S.stock[k]=Math.max(0,S.stock[k]-r.needs[k]); r.updated='Just now on this phone · sharing over mesh'; toast(r.id+' fulfilled. Stock updated.'); }
+    return render(); }
+  if(a==='reopen'){ const r=S.requests.find(x=>x.id===d.id); r.status='unassigned'; r.vol=null; r.note=''; r.updated='Just now on this phone'; toast(r.id+' reopened.'); return render(); }
+  if(a==='reqtab'){ S.reqTab=d.v; return render(); }
+  if(a==='openreq'){ S.screen='map'; S.sel=d.id; S.filter='all'; return render(); }
+  if(a==='rtype'){ S.report.type=d.v; return render(); }
+  if(a==='rurgent'){ S.report.urgent=!S.report.urgent; return render(); }
+  if(a==='notdup'){ S.report.dupDismissed=true; toast('Marked as a new, separate need.'); return render(); }
+  if(a==='merge'){ const r=S.requests.find(x=>x.id==='REQ-0412'); r.reports++; r.updated='Just now · 2nd report merged'; S.report.dupDismissed=true; S.screen='map'; S.sel='REQ-0412'; toast('Your report was added to REQ-0412.'); return render(); }
+  if(a==='submitreport'){ const R=S.report; const n=S.requests.length+410; const id='REQ-0'+(n+7);
+    S.requests.push({id,type:R.type,status:R.urgent?'unassigned':'unassigned',title:(R.text||'New '+TYPES[R.type].label.toLowerCase()+' request').slice(0,70),x:120,y:212,place:'Lane 4, Riverside Ward',zone:'Lane 4 & Market Rd',name:'Not recorded',house:'',vol:null,note:'',updated:'Just now on this phone · sharing over mesh',needs:R.type==='water'?{water:Number(R.people)||1}:R.type==='food'?{food:Number(R.people)||1}:R.type==='shelter'?{tarp:Math.ceil((Number(R.people)||1)/4)}:{firstaid:1},people:(R.people||'?')+' people',dist:'0 m',tag:'N'+Math.floor(Math.random()*9)+'-'+String(Math.floor(Math.random()*90)+10),reports:1});
+    S.screen='map'; S.sel=id; S.report.dupDismissed=false; toast(id+' saved. Sharing with 4 phones nearby.'); return render(); }
+  if(a==='stock'){ S.stock[d.k]=Math.max(0,S.stock[d.k]+Number(d.d)); return render(); }
+  if(a==='invtab'){ S.invTab=d.v; return render(); }
+  if(a==='share'){ S.sharing=!S.sharing; return render(); }
+  if(a==='every'){ S.every=d.v; return render(); }
+  if(a==='sossilent'){ S.sosSilent=!S.sosSilent; return render(); }
+  if(a==='sosask'){ S.sosConfirm=true; return render(); }
+  if(a==='soskeep'){ S.sosConfirm=false; return render(); }
+  if(a==='soscancel'){ S.sos='idle'; S.sosConfirm=false; toast('SOS stopped. Team told you are safe.'); return render(); }
+  if(a==='guide'){ S.fa=d.k; S.screen='guide'; stopBeat(); return render(); }
+  if(a==='call'){ toast('Calling 192 needs a phone signal. No signal? Use SOS.'); return render(); }
+  if(a==='beat'){ S.beat?stopBeat():startBeat(); return render(); }
+  if(a==='markon'){ S.markMode=true; return render(); }
+  if(a==='markoff'){ S.markMode=false; return render(); }
+  if(a==='marktype'){ S.markType=d.v; return render(); }
+  if(a==='maptap'){ if(!S.markMode) return; const m=document.getElementById('hzmap').getBoundingClientRect(); const k=m.width/380; const x=Math.round((e.clientX-m.left)/k), y=Math.round((e.clientY-m.top)/k);
+    const id='H-'+(S.zones.length+1); S.zones.push({id,type:S.markType,name:S.markType+' (new)',x,y,r:30,lvl:S.markType==='Flooding'||S.markType==='Fire'?'red':'orange',since:'Marked just now by Su Su'}); S.markMode=false; toast('Zone '+id+' saved. Volunteers nearby are alerted.'); return render(); }
+  if(a==='walk'){ const dot=document.getElementById('meDot'), l=document.getElementById('meLbl'); [dot,l].forEach(el=>{ el.style.left='138px'; el.style.top='428px'; }); t.disabled=true;
+    const fin=()=>{ S.walked=true; S.hazAlert=true; render(); screenEl.classList.add('buzz'); setTimeout(()=>screenEl.classList.remove('buzz'),1000); try{ navigator.vibrate&&navigator.vibrate([200,100,200,100,200]); }catch(err){} };
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches?fin():setTimeout(fin,2300); return; }
+  if(a==='hazok'){ S.hazAlert=false; S.walked=false; toast('Rerouted over Bridge 3. 4 min longer.'); return render(); }
+  if(a==='hazclose'){ S.hazAlert=false; S.walked=false; return render(); }
+  if(a==='priv'){ S.privacy[d.k]=!S.privacy[d.k]; return render(); }
+  if(a==='ask'){ return botAsk(d.q); }
+});
+screenEl.addEventListener('input', e=>{ const b=e.target.dataset.bind; if(!b) return;
+  if(b==='faq'){ S.faq=e.target.value; document.getElementById('fagrid').innerHTML=faGrid(); }
+  else if(b==='keep'){ S.privacy.keep=e.target.value; }
+  else S.report[b]=e.target.value; });
+screenEl.addEventListener('change', e=>{ if(e.target.dataset.bind==='keep') S.privacy.keep=e.target.value; });
+screenEl.addEventListener('submit', e=>{ e.preventDefault(); const f=e.target.dataset.form; const inp=e.target.querySelector('input'); const v=inp.value.trim(); if(!v) return;
+  if(f==='chat'){ botAsk(v); const n=document.getElementById('chatIn'); if(n) n.focus(); return; }
+  const m={from:me(),text:v,t:'14:32',via:'1 hop',status:'queued'}; S.msgs.push(m); render(); document.getElementById('meshIn').focus();
+  setTimeout(()=>{ m.status='relay'; if(S.screen==='mesh') render(); },1000); setTimeout(()=>{ m.status=null; if(S.screen==='mesh') render(); },2400); });
+
+/* ---------- showcase: index + notes ---------- */
+const SHOTS=[
+ ['map','Relief map'],['card','Request card'],['requests','Request list'],['report','New report & duplicates'],['inventory','Stock & supplies'],['team','Team tracking'],['mesh','Mesh messages'],['sos','SOS alarm'],['sosactive','SOS active'],['firstaid','First aid (20)'],['guide','First aid steps'],['hazards','Danger zones'],['hazalert','Danger zone alert'],['privacy','Privacy mode'],['assistant','Helper chatbot'],['drawer','Sidebar menu']
+];
+function setup(id){
+  S.drawer=false; S.sel=null; S.hazAlert=false; S.markMode=false; S.walked=false; S.sosConfirm=false; stopBeat();
+  if(S.sos==='active'&&id!=='sosactive') S.sos='idle';
+  switch(id){
+    case 'card': S.screen='map'; S.sel='REQ-0412'; break;
+    case 'sosactive': S.screen='sos'; S.sos='active'; S.sosAck=true; break;
+    case 'hazalert': S.screen='hazards'; S.walked=true; S.hazAlert=true; break;
+    case 'drawer': S.screen='map'; S.drawer=true; break;
+    case 'guide': S.screen='guide'; S.fa='cpr'; break;
+    default: S.screen=id;
+  }
+  render();
+}
+const NOTES={
+ map:{t:'Relief map',p:'The home screen. Every request is a pin on a map stored on the phone, colored by status.',u:'Su Su starts her shift with no signal. Red pins show who still needs help. She filters to Clean water to plan the water truck’s route, with flooded roads hatched in red.',c:[['Red, yellow, green pins','Urgent and unassigned, in progress, resolved. Each pin also has a symbol (!, clock, tick) so status reads without relying on colour.'],['Type chips','Filter pins by Water, Food, Medical or Shelter.'],['Danger zones chip','Shows or hides hazard areas.'],['Report need','Opens the new request form.'],['SOS (top right)','On every screen, one tap from the SOS alarm.'],['Mesh count (4)','Phones in range right now.']],o:'Map, pins and edits are stored on the phone. Changes pass to nearby phones over mesh and sync to the server when any phone finds internet.',try:'Tap any pin to open its card.'},
+ card:{t:'Request card',p:'Tapping a pin opens a card with the request type, lead coordinator, volunteer, last update, location and the stock it needs.',u:'REQ-0412 needs 20 cartons of water. Truck 2 has 12, so nobody can accept it until the count changes or stock is transferred.',c:[['Status steps','Where the request is: Unassigned, Assigned, Fulfilled.'],['Main button','One tap moves the request to the next status. Fulfilling it subtracts the stock used.'],['Blocked state','When stock is short, the button is disabled and says why.'],['Update stock / Ask team','Jump to the stock counter, or ask on mesh.'],['Navigate / Message','Route on the offline map that avoids danger zones, or message the team.']],o:'Status changes save on the phone first ("15 mins ago via local cache") and spread over mesh.',try:'Open Stock, add 8 water cartons, come back and assign REQ-0412. Or tap the red Shelter pin after adding 2 tarpaulins.'},
+ requests:{t:'Request list',p:'The same requests as the map, as a list sorted by urgency.',u:'A volunteer scans what is open nearby, sees which ones Truck 2 can’t stock, and taps the closest one they can.',c:[['Tabs','All, Urgent (unassigned), Assigned, Done, with counts.'],['Row','Type, short title, area, distance, status, volunteer and last update.'],['Short on stock tag','Flags requests your vehicle can’t fill yet.'],['Tap a row','Opens that request’s card on the map.']],o:'Sorted and filtered on the phone; no server needed.',try:'Switch to Volunteer at the top to see the vehicle banner.'},
+ report:{t:'New report & duplicate check',p:'A short form for a new need, with a check for repeat reports.',u:'A volunteer reports that Lane 4 has no clean water. The app sees REQ-0412, same need and street, 40 m away, and suggests merging instead of creating a second pin.',c:[['Need type','Four large buttons: Clean water, Food, Medical, Shelter.'],['Location','From GPS, which works without internet. Adjust if needed.'],['Repeat report card','Shows the likely match and why. Add to it, or mark as not a repeat.'],['Urgent switch','Makes it a red pin for everyone.'],['Save and share on mesh','Saves on the phone, then sends to nearby phones.']],o:'The duplicate check runs on the phone, against every request the phone has seen.',try:'Change the need type to Food: the repeat warning goes away. Tap Add to REQ-0412 to merge.'},
+ inventory:{t:'Stock & supplies',p:'A counter for what the team carries, checked against open requests, plus what other supply sites have.',u:'Before leaving, Hnin counts Truck 2. The screen shows water is 8 cartons short for open requests, so Su Su asks the central hub for a transfer.',c:[['+ / −','Change a count. Requests that were blocked unlock as soon as there is enough.'],['Short by / Covers','Compares each item with what open requests need.'],['Supply sites tab','Recorded stock at other sites, with Request transfer.'],['Save count','Shares the new numbers with the team.']],o:'Counts live on the phone and sync over mesh. Fulfilling a request subtracts its stock automatically.',try:'Add water until the summary says the truck is ready for more requests.'},
+ team:{t:'Team tracking',p:'Coordinators see where each volunteer is, how fresh that position is and their battery. Volunteers control their own sharing.',u:'Ko Min has been out of range for 18 minutes. His last known spot is restored from Su Su’s phone storage and shown in grey, so she knows where to start looking.',c:[['Live / last known','Green avatars are live over mesh. Grey ones show the last position saved on the phone.'],['Trails','Dotted lines show the recent path.'],['Battery','Low batteries in red.'],['Ping all','Asks every phone in range for a fresh position.'],['Volunteer view','Share on/off, how often, and who can see it.']],o:'Positions hop over mesh. When nobody is in range they wait on the phone and send later.',try:'Switch to Volunteer to see the My location screen.'},
+ mesh:{t:'Mesh messages',p:'Team chat that goes phone to phone over Bluetooth and Wi-Fi Direct, without towers or internet.',u:'Su Su warns everyone that Bridge 5 is cracked. Her message hops through the monastery-roof relay phone to reach Ko Min 3 hops away.',c:[['Range view','Phones and relays nearby, with hop lines.'],['Priority messages','Coordinator warnings are tinted red.'],['Delivery status','Waiting for a nearby phone, passed on, delivered.'],['Message box','Type and send.']],o:'Messages are stored on each phone and passed along until they reach everyone on the team.',try:'Send a message and watch it go from waiting to delivered.'},
+ sos:{t:'SOS alarm',p:'A large button that must be held for 3 seconds, so a pocket tap can’t trigger it.',u:'Aung is cornered on a flooded street at night. He holds SOS. Silent SOS is on, because a loud alarm could draw attention.',c:[['Hold ring','Fills over 3 seconds. Letting go cancels.'],['Silent SOS','Sends without sound on this phone.'],['What happens','Who gets the alert and how.'],['Numbers','Ambulance and police numbers for when there is signal.']],o:'Sent over mesh to every phone in range, which pass it on. No signal needed.',try:'Press and hold the red button.'},
+ sosactive:{t:'SOS active',p:'What the person in danger sees once SOS is sent.',u:'The screen confirms the location went out, how many phones got it, and when the coordinator received it.',c:[['Delivery list','Location, mesh reach, coordinator receipt, alarm state.'],['I’m safe','Asks for confirmation before stopping, so it can’t be cancelled by accident.'],['Open first aid','Straight to the guides.']],o:'Keeps re-sending over mesh until someone confirms.',try:'Tap I’m safe, then confirm.'},
+ firstaid:{t:'First aid: 20 emergencies',p:'Twenty guides in simple words, all stored on the phone.',u:'A volunteer finds a child with a bad burn. They type "burn" and get four steps they can follow at once.',c:[['Search','Find a guide by plain words.'],['Red tiles','The most life-threatening emergencies.'],['Each tile','Name and a plain description of what you see.']],o:'Text and pictures ship with the app. Zero internet needed.',try:'Search "snake" or "blood".'},
+ guide:{t:'First aid steps',p:'One emergency, four big numbered steps with a picture each. Red pictures are things not to do.',u:'During CPR the volunteer taps the heart to get a 110-a-minute beat to push along to.',c:[['Call ambulance bar','Shows the number. Points to SOS when there is no signal.'],['Steps','Short sentences, one action each.'],['Beat (CPR only)','A visual and sound metronome for chest pushes.']],o:'Fully offline.',try:'Tap the heart to start the beat.'},
+ hazards:{t:'Danger zones',p:'Coordinators mark risky areas on the offline map. Volunteers’ phones vibrate when they get close.',u:'Su Su marks the cracked Bridge 5 as H-2. Later, Aung walks toward it without signal and his phone warns him 60 m before.',c:[['Mark zone','Coordinator only: choose a type, then tap the map.'],['Zone list','Each zone with ID, type and when it was marked.'],['Simulate walk','Volunteer view: walk toward Bridge 5 to trigger the alert.']],o:'Zones are stored on every phone. The distance check uses GPS, which works without internet.',try:'As Coordinator, tap Mark zone, pick a type and tap the map. As Volunteer, tap Simulate walk.'},
+ hazalert:{t:'Danger zone alert',p:'The warning a volunteer gets when they come within 100 m of a marked zone.',u:'Aung is 60 m from Bridge 5. The phone vibrates three times and suggests Bridge 3.',c:[['Distance and zone ID','How close, and which zone.'],['Reroute me','Redraws the route around the zone.'],['Dismiss','Closes the warning.']],o:'Triggered by GPS and stored zones. No internet.',try:'Tap I understand, reroute me.'},
+ privacy:{t:'Privacy mode',p:'Hides survivor names and exact addresses from volunteers, replacing them with tags and 100 m circles.',u:'The team works in an area where lists of names could put families at risk. Su Su turns privacy mode on for everyone.',c:[['Main switch','On or off for the whole team.'],['Before and after','What a volunteer sees each way.'],['Options','Names, location blur, random IDs, face blur, auto-delete.']],o:'Masking happens on the phone before anything is shared over mesh.',try:'Turn it on, then open the map and tap REQ-0412: the card shows Survivor K7-42.'},
+ assistant:{t:'Helper chatbot',p:'A small assistant that runs on the phone. Short answers, with suggested follow-up questions.',u:'A new volunteer asks how to mark a request done, then taps the follow-up about low stock.',c:[['Suggested questions','Tap instead of typing.'],['Follow-ups','Each answer offers the next likely questions.'],['Jump buttons','Some answers open the right screen.'],['Question box','Free text, matched to known topics.']],o:'Runs on the phone without internet. Answers come from a fixed, reviewed set.',try:'Tap Emergency numbers, then How does SOS work?'},
+ drawer:{t:'Sidebar menu',p:'Every screen in one place, the role switch, and the sync status.',u:'Su Su hands her phone to a volunteer and switches the role, or checks how many changes are waiting to sync.',c:[['Header','Name, role, team and role switch.'],['Operations, Safety, Data','Screens grouped by job, with live counts.'],['Coming later','Automatic reminders, reports and analytics, partner organisations.'],['Footer','Offline state and changes waiting to sync.']],o:'Shows how much is saved on the phone and when the last internet sync was.',try:'Switch role here and watch the menu change.'}
+};
+function renderIndex(){
+  const cur=viewId(); const el=document.getElementById('index');
+  el.innerHTML='<h2>Screens</h2>'+SHOTS.map((s,i)=>'<button type="button" data-shot="'+s[0]+'"'+(cur===s[0]?' aria-current="true"':'')+'><span class="n">'+String(i+1).padStart(2,'0')+'</span>'+s[1]+'</button>').join('');
+}
+function renderNotes(){
+  const n=NOTES[viewId()]||NOTES.map;
+  document.getElementById('notes').innerHTML='<h2>'+(S.role==='coordinator'?'Coordinator view':'Volunteer view')+'</h2><h3>'+n.t+'</h3><p class="lead">'+n.p+'</p><h4>Use case</h4><p>'+n.u+'</p><h4>Buttons and controls</h4><dl class="ctl">'+n.c.map(c=>'<dt>'+c[0]+'</dt><dd>'+c[1]+'</dd>').join('')+'</dl><h4>Without internet</h4><p>'+n.o+'</p><div class="try"><b>Try it</b>'+n.try+'</div><p class="sample">All names, places and numbers are sample data.</p>';
+}
+document.getElementById('index').addEventListener('click',e=>{ const b=e.target.closest('[data-shot]'); if(b) setup(b.dataset.shot); });
+document.querySelectorAll('.seg [data-role]').forEach(b=>b.addEventListener('click',()=>{ S.role=b.dataset.role; render(); }));
+
+/* fit phone to narrow screens */
+function fit(){ const w=document.getElementById('phoneWrap'), ph=document.getElementById('phone'); if(document.documentElement.classList.contains('shot')){ ph.style.transform=''; w.style.height=''; w.style.width=''; return; }
+  const bare=window.innerWidth<560; ph.classList.toggle('bare',bare); const W=bare?380:404, H=bare?820:844;
+  const avail=w.parentElement.clientWidth||W; const s=bare?Math.min(1.15, avail/W):Math.min(1, avail/W); ph.style.transform=s!==1?'scale('+s+')':''; w.style.width=(W*s)+'px'; w.style.height=(H*s)+'px'; }
+window.addEventListener('resize',fit);
+
+window.RM={ shot(id,role){ document.documentElement.classList.add('shot'); fit(); S.role=role||'coordinator'; S.toast=null; setup(id); }, S, botAsk, setup };
+function fromHash(){ const h=(location.hash||'').slice(1); if(SHOTS.some(s=>s[0]===h)) setup(h); }
+window.addEventListener('hashchange',fromHash);
+render(); fit(); fromHash();
+})();
+</script>
